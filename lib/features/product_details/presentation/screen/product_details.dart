@@ -1,14 +1,14 @@
-import 'package:ecommerce_c15_str/core/resources/assets_manager.dart';
-import 'package:ecommerce_c15_str/core/resources/color_manager.dart';
-import 'package:ecommerce_c15_str/core/resources/styles_manager.dart';
-import 'package:ecommerce_c15_str/core/widget/custom_elevated_button.dart';
-import 'package:ecommerce_c15_str/features/product_details/presentation/widgets/product_color.dart';
-import 'package:ecommerce_c15_str/features/product_details/presentation/widgets/product_description.dart';
-import 'package:ecommerce_c15_str/features/product_details/presentation/widgets/product_item.dart';
-import 'package:ecommerce_c15_str/features/product_details/presentation/widgets/product_label.dart';
-import 'package:ecommerce_c15_str/features/product_details/presentation/widgets/product_rating.dart';
-import 'package:ecommerce_c15_str/features/product_details/presentation/widgets/product_size.dart';
-import 'package:ecommerce_c15_str/features/product_details/presentation/widgets/product_slider.dart';
+import 'package:shopaz_e_commerce/core/resources/assets_manager.dart';
+import 'package:shopaz_e_commerce/core/resources/color_manager.dart';
+import 'package:shopaz_e_commerce/core/resources/styles_manager.dart';
+import 'package:shopaz_e_commerce/core/widget/custom_elevated_button.dart';
+import 'package:shopaz_e_commerce/features/product_details/presentation/widgets/product_color.dart';
+import 'package:shopaz_e_commerce/features/product_details/presentation/widgets/product_description.dart';
+import 'package:shopaz_e_commerce/features/product_details/presentation/widgets/product_item.dart';
+import 'package:shopaz_e_commerce/features/product_details/presentation/widgets/product_label.dart';
+import 'package:shopaz_e_commerce/features/product_details/presentation/widgets/product_rating.dart';
+import 'package:shopaz_e_commerce/features/product_details/presentation/widgets/product_size.dart';
+import 'package:shopaz_e_commerce/features/product_details/presentation/widgets/product_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

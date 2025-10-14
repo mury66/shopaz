@@ -1,4 +1,4 @@
-import 'package:ecommerce_c15_str/core/resources/color_manager.dart';
+import 'package:shopaz_e_commerce/core/resources/color_manager.dart';
 import 'package:flutter/material.dart';
 
 import 'font_manager.dart';

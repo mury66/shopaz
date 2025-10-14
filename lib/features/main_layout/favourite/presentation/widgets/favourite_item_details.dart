@@ -1,8 +1,8 @@
 import 'package:colornames/colornames.dart';
-import 'package:ecommerce_c15_str/core/resources/color_manager.dart';
-import 'package:ecommerce_c15_str/core/resources/styles_manager.dart';
-import 'package:ecommerce_c15_str/core/resources/values_manager.dart';
-import 'package:ecommerce_c15_str/features/main_layout/favourite/presentation/widgets/custom_txt_widget.dart';
+import 'package:shopaz_e_commerce/core/resources/color_manager.dart';
+import 'package:shopaz_e_commerce/core/resources/styles_manager.dart';
+import 'package:shopaz_e_commerce/core/resources/values_manager.dart';
+import 'package:shopaz_e_commerce/features/main_layout/favourite/presentation/widgets/custom_txt_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

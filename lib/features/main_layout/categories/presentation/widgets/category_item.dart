@@ -1,24 +1,25 @@
-import 'package:ecommerce_c15_str/core/resources/color_manager.dart';
-import 'package:ecommerce_c15_str/core/resources/font_manager.dart';
-import 'package:ecommerce_c15_str/core/resources/styles_manager.dart';
-import 'package:ecommerce_c15_str/core/resources/values_manager.dart';
+import 'package:shopaz_e_commerce/core/resources/color_manager.dart';
+import 'package:shopaz_e_commerce/core/resources/font_manager.dart';
+import 'package:shopaz_e_commerce/core/resources/styles_manager.dart';
+import 'package:shopaz_e_commerce/core/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 
 class CategoryItem extends StatelessWidget {
   final int index;
   final String title;
+  final String id;
 
   final bool isSelected;
   final Function onItemClick;
 
-  const CategoryItem(this.index, this.title, this.isSelected, this.onItemClick,
+  const CategoryItem(this.index, this.id,this.title, this.isSelected, this.onItemClick,
       {super.key});
 
   @override
   Widget build(BuildContext context) {
     // Handle item click by calling onItemClick callback
     return InkWell(
-      onTap: () => onItemClick(index),
+      onTap: () => onItemClick(index,id),
       child: Container(
         // Set background color based on selection
         color: isSelected?ColorManager.white:Colors.transparent,

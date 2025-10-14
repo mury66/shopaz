@@ -1,10 +1,10 @@
-import 'package:ecommerce_c15_str/core/routes_manager/routes.dart';
-import 'package:ecommerce_c15_str/features/auth/presentation/screens/sign_in_screen.dart';
-import 'package:ecommerce_c15_str/features/auth/presentation/screens/sign_up_screen.dart';
-import 'package:ecommerce_c15_str/features/cart/presentation/screens/cart_screen.dart';
-import 'package:ecommerce_c15_str/features/main_layout/main_layout.dart';
-import 'package:ecommerce_c15_str/features/product_details/presentation/screen/product_details.dart';
-import 'package:ecommerce_c15_str/features/products_screen/presentation/screens/products_screen.dart';
+import 'package:shopaz_e_commerce/core/routes_manager/routes.dart';
+import 'package:shopaz_e_commerce/features/auth/presentation/screens/sign_in_screen.dart';
+import 'package:shopaz_e_commerce/features/auth/presentation/screens/sign_up_screen.dart';
+import 'package:shopaz_e_commerce/features/cart/presentation/screens/cart_screen.dart';
+import 'package:shopaz_e_commerce/features/main_layout/main_layout.dart';
+import 'package:shopaz_e_commerce/features/product_details/presentation/screen/product_details.dart';
+import 'package:shopaz_e_commerce/features/products_screen/presentation/screens/products_screen.dart';
 import 'package:flutter/material.dart';
 
 class RouteGenerator {
@@ -26,7 +26,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) =>  SignInScreen());
 
       case Routes.signUpRoute:
-        return MaterialPageRoute(builder: (_) => const SignUpScreen());
+        return MaterialPageRoute(builder: (_) =>  SignUpScreen());
       default:
         return unDefinedRoute();
     }

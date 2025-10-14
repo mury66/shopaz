@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ecommerce_c15_str/core/resources/color_manager.dart';
-import 'package:ecommerce_c15_str/core/resources/constants_manager.dart';
-import 'package:ecommerce_c15_str/core/resources/values_manager.dart';
-import 'package:ecommerce_c15_str/core/routes_manager/routes.dart';
-import 'package:ecommerce_c15_str/core/widget/heart_button.dart';
-import 'package:ecommerce_c15_str/features/main_layout/favourite/presentation/widgets/add_to_cart_button.dart';
-import 'package:ecommerce_c15_str/features/main_layout/favourite/presentation/widgets/favourite_item_details.dart';
+import 'package:shopaz_e_commerce/core/resources/color_manager.dart';
+import 'package:shopaz_e_commerce/core/resources/constants_manager.dart';
+import 'package:shopaz_e_commerce/core/resources/values_manager.dart';
+import 'package:shopaz_e_commerce/core/routes_manager/routes.dart';
+import 'package:shopaz_e_commerce/core/widget/heart_button.dart';
+import 'package:shopaz_e_commerce/features/main_layout/favourite/presentation/widgets/add_to_cart_button.dart';
+import 'package:shopaz_e_commerce/features/main_layout/favourite/presentation/widgets/favourite_item_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

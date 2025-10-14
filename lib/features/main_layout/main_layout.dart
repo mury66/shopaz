@@ -1,10 +1,13 @@
-import 'package:ecommerce_c15_str/core/resources/assets_manager.dart';
-import 'package:ecommerce_c15_str/core/resources/color_manager.dart';
-import 'package:ecommerce_c15_str/core/widget/home_screen_app_bar.dart';
-import 'package:ecommerce_c15_str/features/main_layout/categories/presentation/categories_tab.dart';
-import 'package:ecommerce_c15_str/features/main_layout/favourite/presentation/favourite_screen.dart';
-import 'package:ecommerce_c15_str/features/main_layout/profile_tab/presentation/profile_tab.dart';
+import 'package:shopaz_e_commerce/core/resources/assets_manager.dart';
+import 'package:shopaz_e_commerce/core/resources/color_manager.dart';
+import 'package:shopaz_e_commerce/core/widget/home_screen_app_bar.dart';
+import 'package:shopaz_e_commerce/di.dart';
+import 'package:shopaz_e_commerce/features/cart/presentation/bloc/cart_bloc.dart';
+import 'package:shopaz_e_commerce/features/main_layout/categories/presentation/categories_tab.dart';
+import 'package:shopaz_e_commerce/features/main_layout/favourite/presentation/favourite_screen.dart';
+import 'package:shopaz_e_commerce/features/main_layout/profile_tab/presentation/profile_tab.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'home/presentation/home_tab.dart';
 
@@ -16,7 +19,7 @@ class MainLayout extends StatefulWidget {
 }
 
 class _MainLayoutState extends State<MainLayout> {
-  int currentIndex = 0;
+  int currentIndex = 1;
   List<Widget> tabs = [
     const HomeTab(),
     const CategoriesTab(),
@@ -25,7 +28,9 @@ class _MainLayoutState extends State<MainLayout> {
   ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocProvider(
+  create: (context) => getIt<CartBloc>()..add(GetCartItemsEvent()),
+  child: Scaffold(
       appBar: const HomeScreenAppBar(),
       extendBody: false,
       body: tabs[currentIndex],
@@ -53,7 +58,8 @@ class _MainLayoutState extends State<MainLayout> {
           ),
         ),
       ),
-    );
+    ),
+);
   }
 
   changeSelectedIndex(int selectedIndex) {

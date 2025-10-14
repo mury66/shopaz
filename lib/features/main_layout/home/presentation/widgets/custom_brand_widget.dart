@@ -1,4 +1,4 @@
-import 'package:ecommerce_c15_str/core/resources/assets_manager.dart';
+import 'package:shopaz_e_commerce/core/resources/assets_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

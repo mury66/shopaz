@@ -9,8 +9,11 @@ part of 'auth_response_model.dart';
 AuthResponseModel _$AuthResponseModelFromJson(Map<String, dynamic> json) =>
     AuthResponseModel(
       message: json['message'] as String,
-      user: User.fromJson(json['user'] as Map<String, dynamic>),
-      token: json['token'] as String,
+      user: json['user'] == null
+          ? null
+          : User.fromJson(json['user'] as Map<String, dynamic>),
+      token: json['token'] as String?,
+      statusMsg: json['statusMsg'] as String?,
     );
 
 Map<String, dynamic> _$AuthResponseModelToJson(AuthResponseModel instance) =>
@@ -18,6 +21,7 @@ Map<String, dynamic> _$AuthResponseModelToJson(AuthResponseModel instance) =>
       'message': instance.message,
       'user': instance.user,
       'token': instance.token,
+      'statusMsg': instance.statusMsg,
     };
 
 User _$UserFromJson(Map<String, dynamic> json) => User(

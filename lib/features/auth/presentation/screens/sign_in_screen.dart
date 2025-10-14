@@ -1,15 +1,15 @@
-import 'package:ecommerce_c15_str/core/resources/assets_manager.dart';
-import 'package:ecommerce_c15_str/core/resources/color_manager.dart';
-import 'package:ecommerce_c15_str/core/resources/values_manager.dart';
-import 'package:ecommerce_c15_str/core/routes_manager/routes.dart';
-import 'package:ecommerce_c15_str/core/widget/custom_elevated_button.dart';
-import 'package:ecommerce_c15_str/core/widget/main_text_field.dart';
-import 'package:ecommerce_c15_str/core/widget/validators.dart';
-import 'package:ecommerce_c15_str/di.dart';
-import 'package:ecommerce_c15_str/features/auth/data/datasources/auth_remote_ds_impl.dart';
-import 'package:ecommerce_c15_str/features/auth/data/reposiotry/auth_repo_impl.dart';
-import 'package:ecommerce_c15_str/features/auth/domain/usecases/login_usecase.dart';
-import 'package:ecommerce_c15_str/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:shopaz_e_commerce/core/resources/assets_manager.dart';
+import 'package:shopaz_e_commerce/core/resources/color_manager.dart';
+import 'package:shopaz_e_commerce/core/resources/values_manager.dart';
+import 'package:shopaz_e_commerce/core/routes_manager/routes.dart';
+import 'package:shopaz_e_commerce/core/widget/custom_elevated_button.dart';
+import 'package:shopaz_e_commerce/core/widget/main_text_field.dart';
+import 'package:shopaz_e_commerce/core/widget/validators.dart';
+import 'package:shopaz_e_commerce/di.dart';
+import 'package:shopaz_e_commerce/features/auth/data/datasources/auth_remote_ds_impl.dart';
+import 'package:shopaz_e_commerce/features/auth/data/reposiotry/auth_repo_impl.dart';
+import 'package:shopaz_e_commerce/features/auth/domain/usecases/login_usecase.dart';
+import 'package:shopaz_e_commerce/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -57,10 +57,10 @@ class SignInScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: AppSize.s40.h),
-                      Center(child: SvgPicture.asset(SvgAssets.routeLogo)),
+                      Center(child: SvgPicture.asset(SvgAssets.shopazLogo)),
                       SizedBox(height: AppSize.s40.h),
                       Text(
-                        'Welcome Back To Route',
+                        'Welcome Back To ShopAZ',
                         style: getBoldStyle(
                           color: ColorManager.white,
                         ).copyWith(fontSize: FontSize.s24.sp),

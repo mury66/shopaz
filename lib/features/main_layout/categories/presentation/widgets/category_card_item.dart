@@ -1,7 +1,7 @@
-import 'package:ecommerce_c15_str/core/resources/color_manager.dart';
-import 'package:ecommerce_c15_str/core/resources/font_manager.dart';
-import 'package:ecommerce_c15_str/core/resources/styles_manager.dart';
-import 'package:ecommerce_c15_str/core/resources/values_manager.dart';
+import 'package:shopaz_e_commerce/core/resources/color_manager.dart';
+import 'package:shopaz_e_commerce/core/resources/font_manager.dart';
+import 'package:shopaz_e_commerce/core/resources/styles_manager.dart';
+import 'package:shopaz_e_commerce/core/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

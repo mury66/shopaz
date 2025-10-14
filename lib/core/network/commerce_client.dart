@@ -1,6 +1,14 @@
 import 'package:dio/dio.dart';
-import 'package:ecommerce_c15_str/features/auth/data/models/auth_response_model.dart';
-import 'package:ecommerce_c15_str/features/auth/data/models/login_request.dart';
+import 'package:shopaz_e_commerce/features/auth/data/models/auth_response_model.dart';
+import 'package:shopaz_e_commerce/features/auth/data/models/login_request.dart';
+import 'package:shopaz_e_commerce/features/auth/data/models/signup_request.dart';
+import 'package:shopaz_e_commerce/features/cart/data/models/add_to_cart_request.dart';
+import 'package:shopaz_e_commerce/features/cart/data/models/cart_count_response.dart';
+import 'package:shopaz_e_commerce/features/cart/data/models/cart_response.dart';
+import 'package:shopaz_e_commerce/features/main_layout/categories/data/models/sub_category_model.dart';
+import 'package:shopaz_e_commerce/features/main_layout/categories/data/models/sub_category_response.dart';
+import 'package:shopaz_e_commerce/features/main_layout/home/data/model/category_model.dart';
+import 'package:shopaz_e_commerce/features/products_screen/data/models/products_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -14,6 +22,26 @@ abstract class CommerceClient {
 
   @POST('auth/signin')
   Future<AuthResponseModel> login(@Body() LoginRequest request);
+
+  @GET('categories')
+  Future<CategoryModel> getCategories();
+
+  @POST('auth/signup')
+  Future<AuthResponseModel> signUp(@Body() SignupRequest request);
+
+  @GET("categories/{id}/subcategories")
+  Future<SubCategoryResponse> getSubCategories(@Path('id') String categoryId);
+
+  @GET("products")
+  Future<ProductsResponse> getProducts();
+
+  @POST("cart")
+  Future<CartResponse> addToCart(@Body() AddToCartRequest request, @Header('token') String token );
+
+
+  @GET("cart")
+  Future<CartCountResponse> getCartItems( @Header('token') String token );
+
 }
 
 @module

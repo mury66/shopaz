@@ -1,7 +1,7 @@
-import 'package:ecommerce_c15_str/core/resources/constants_manager.dart';
-import 'package:ecommerce_c15_str/core/resources/values_manager.dart';
-import 'package:ecommerce_c15_str/features/main_layout/favourite/presentation/widgets/favourite_item.dart';
-import 'package:ecommerce_c15_str/features/main_layout/favourite/presentation/widgets/favourite_item.dart';
+import 'package:shopaz_e_commerce/core/resources/constants_manager.dart';
+import 'package:shopaz_e_commerce/core/resources/values_manager.dart';
+import 'package:shopaz_e_commerce/features/main_layout/favourite/presentation/widgets/favourite_item.dart';
+import 'package:shopaz_e_commerce/features/main_layout/favourite/presentation/widgets/favourite_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

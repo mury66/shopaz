@@ -1,4 +1,4 @@
-import 'package:ecommerce_c15_str/features/product_details/presentation/widgets/color_widget.dart';
+import 'package:shopaz_e_commerce/features/product_details/presentation/widgets/color_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
