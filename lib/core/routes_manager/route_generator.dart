@@ -17,7 +17,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const MainLayout());
 
       case Routes.productsScreenRoute:
-        return MaterialPageRoute(builder: (_) => const ProductsScreen());
+        final categoryId = settings.arguments as String;
+        return MaterialPageRoute(
+          builder: (_) => ProductsScreen(categoryId: categoryId),
+        );
 
       case Routes.productDetails:
         return MaterialPageRoute(builder: (_) => const ProductDetails());

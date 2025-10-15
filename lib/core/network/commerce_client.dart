@@ -5,12 +5,10 @@ import 'package:shopaz_e_commerce/features/auth/data/models/signup_request.dart'
 import 'package:shopaz_e_commerce/features/cart/data/models/add_to_cart_request.dart';
 import 'package:shopaz_e_commerce/features/cart/data/models/cart_count_response.dart';
 import 'package:shopaz_e_commerce/features/cart/data/models/cart_response.dart';
-import 'package:shopaz_e_commerce/features/main_layout/categories/data/models/sub_category_model.dart';
 import 'package:shopaz_e_commerce/features/main_layout/categories/data/models/sub_category_response.dart';
 import 'package:shopaz_e_commerce/features/main_layout/home/data/model/category_model.dart';
 import 'package:shopaz_e_commerce/features/products_screen/data/models/products_response.dart';
 import 'package:injectable/injectable.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -33,7 +31,10 @@ abstract class CommerceClient {
   Future<SubCategoryResponse> getSubCategories(@Path('id') String categoryId);
 
   @GET("products")
-  Future<ProductsResponse> getProducts();
+  Future<ProductsResponse> getProducts(@Query("category[in]") String categoryId);
+
+  @GET("products")
+  Future<ProductsResponse> getAllProducts();
 
   @POST("cart")
   Future<CartResponse> addToCart(@Body() AddToCartRequest request, @Header('token') String token );

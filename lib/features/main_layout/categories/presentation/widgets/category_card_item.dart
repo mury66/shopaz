@@ -42,13 +42,15 @@ class CategoryCardItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       // Category title
-                      Text(
-                        title,
-                        style: getBoldStyle(
-                            color: ColorManager.textColor,
-                            fontSize: FontSize.s16.sp),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+                      Expanded(
+                        child: Text(
+                          title,
+                          style: getBoldStyle(
+                              color: ColorManager.textColor,
+                              fontSize: FontSize.s16.sp),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                       // Shop Now button
                       SizedBox(

@@ -12,7 +12,8 @@ class ProdDSImpl implements ProdDs {
   @override
   Future<ProductsResponse> getProducts(String id) {
     try {
-      return getIt<CommerceClient>().getProducts().catchError((obj) {
+      print("category id = $id");
+      return getIt<CommerceClient>().getProducts(id).catchError((obj) {
         print(obj.toString());
       });
     } catch (e) {

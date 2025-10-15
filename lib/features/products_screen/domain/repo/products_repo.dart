@@ -6,5 +6,5 @@ import 'package:shopaz_e_commerce/features/products_screen/data/models/products_
 abstract class ProductsRepo{
 
 
- Future<Either<CommerceFailure,ProductsResponse>> getProducts(id);
+ Future<Either<CommerceFailure,ProductsResponse>> getProducts(String id);
 }

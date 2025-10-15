@@ -12,11 +12,9 @@ class ProductsRepoImpl implements ProductsRepo {
   ProductsRepoImpl(this.ds);
 
   @override
-  Future<Either<CommerceFailure, ProductsResponse>> getProducts(id) async {
+  Future<Either<CommerceFailure, ProductsResponse>> getProducts(String id) async {
     try {
-
       var res = await ds.getProducts(id);
-      print("Hamouda");
       return Right(res);
     } catch (e) {
       return Left(GeneralFailure(message: e.toString()));

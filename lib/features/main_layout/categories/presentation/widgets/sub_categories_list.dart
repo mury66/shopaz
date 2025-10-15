@@ -9,6 +9,8 @@ import 'package:shopaz_e_commerce/features/main_layout/categories/presentation/w
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/routes_manager/routes.dart';
+import '../../../../products_screen/presentation/screens/products_screen.dart';
 import 'sub_category_item.dart';
 
 class SubCategoriesList extends StatelessWidget {
@@ -49,6 +51,7 @@ class SubCategoriesList extends StatelessWidget {
                   (context, index) => SubCategoryItem(
                     state.subCategoryModel?.data[index].name ?? "",
                     state.subCategoryModel?.data[index].id ?? "",
+                    state.subCategoryModel?.data[index].category ?? "",
                     ImageAssets.subcategoryCardImage,
                     goToCategoryProductsListScreen,
                   ),
@@ -67,7 +70,7 @@ class SubCategoriesList extends StatelessWidget {
     );
   }
 
-  goToCategoryProductsListScreen() {
-    // todo implement this function
+  goToCategoryProductsListScreen(context,String catId) {
+    Navigator.push(context,MaterialPageRoute(builder: (context) => ProductsScreen(categoryId:catId,)));
   }
 }
