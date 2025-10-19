@@ -12,6 +12,7 @@ import 'package:injectable/injectable.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:retrofit/retrofit.dart';
 
+import '../../features/main_layout/home/data/model/brand_model.dart';
 part 'commerce_client.g.dart';
 
 @RestApi(baseUrl: 'https://ecommerce.routemisr.com/api/v1/')
@@ -27,6 +28,9 @@ abstract class CommerceClient {
   @POST('auth/signup')
   Future<AuthResponseModel> signUp(@Body() SignupRequest request);
 
+  @GET('brands')
+  Future<BrandModel> getBrands();
+
   @GET("categories/{id}/subcategories")
   Future<SubCategoryResponse> getSubCategories(@Path('id') String categoryId);
 
@@ -38,7 +42,6 @@ abstract class CommerceClient {
 
   @POST("cart")
   Future<CartResponse> addToCart(@Body() AddToCartRequest request, @Header('token') String token );
-
 
   @GET("cart")
   Future<CartCountResponse> getCartItems( @Header('token') String token );

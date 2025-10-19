@@ -29,6 +29,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
 
             result.fold(
               (l) {
+                print("errrrrrrrrrrrrrrrorGetProductsEvent =- ${l.message}");
                 emit(
                   state.copyWith(
                     productsRequestState: RequestState.error,

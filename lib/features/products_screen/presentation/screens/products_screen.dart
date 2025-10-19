@@ -18,7 +18,8 @@ class ProductsScreen extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
 
     return BlocProvider(
-      create: (context) => getIt<CartBloc>()..add(GetCartItemsEvent()),
+      create: (context) => getIt<CartBloc>(),
+        // ..add(LoadCartEvent()),
       child: Scaffold(
         appBar: const HomeScreenAppBar(automaticallyImplyLeading: true),
         body: BlocProvider(

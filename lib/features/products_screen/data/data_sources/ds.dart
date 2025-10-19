@@ -10,14 +10,14 @@ abstract class ProdDs {
 @Injectable(as: ProdDs)
 class ProdDSImpl implements ProdDs {
   @override
-  Future<ProductsResponse> getProducts(String id) {
+  Future<ProductsResponse> getProducts(String id) async {
     try {
       print("category id = $id");
-      return getIt<CommerceClient>().getProducts(id).catchError((obj) {
-        print(obj.toString());
-      });
-    } catch (e) {
-      print(e.toString());
+      final client = getIt<CommerceClient>();
+      final response = await client.getProducts(id);
+      return response;
+    } catch (e, st) {
+      print("❌ Error in ProdDSImpl.getProducts: $e\n$st");
       rethrow;
     }
   }

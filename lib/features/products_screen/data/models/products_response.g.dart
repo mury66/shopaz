@@ -8,10 +8,18 @@ part of 'products_response.dart';
 
 ProductsResponse _$ProductsResponseFromJson(Map<String, dynamic> json) =>
     ProductsResponse(
+      results: (json['results'] as num?)?.toInt(),
+      metadata: json['metadata'] == null
+          ? null
+          : Metadata.fromJson(json['metadata'] as Map<String, dynamic>),
       data: (json['data'] as List<dynamic>?)
           ?.map((e) => ProductModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
 Map<String, dynamic> _$ProductsResponseToJson(ProductsResponse instance) =>
-    <String, dynamic>{'data': instance.data};
+    <String, dynamic>{
+      'results': instance.results,
+      'metadata': instance.metadata,
+      'data': instance.data,
+    };

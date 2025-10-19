@@ -41,6 +41,8 @@ import 'features/main_layout/home/data/datasources/home_remote_ds.dart'
     as _i427;
 import 'features/main_layout/home/data/repo/home_repo_impl.dart' as _i573;
 import 'features/main_layout/home/domain/repo/home_repo.dart' as _i347;
+import 'features/main_layout/home/domain/usecase/get_brands_usecase.dart'
+    as _i306;
 import 'features/main_layout/home/domain/usecase/get_categories_usecase.dart'
     as _i726;
 import 'features/main_layout/home/presentation/bloc/home_bloc.dart' as _i123;
@@ -102,8 +104,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i726.GetCategoriesUseCase>(
       () => _i726.GetCategoriesUseCase(gh<_i347.HomeRepo>()),
     );
-    gh.factory<_i123.HomeBloc>(
-      () => _i123.HomeBloc(gh<_i726.GetCategoriesUseCase>()),
+    gh.factory<_i306.GetBrandsUseCase>(
+      () => _i306.GetBrandsUseCase(gh<_i347.HomeRepo>()),
     );
     gh.factory<_i239.CartBloc>(
       () => _i239.CartBloc(
@@ -121,6 +123,12 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i916.CategoryBloc(
         gh<_i726.GetCategoriesUseCase>(),
         gh<_i92.GetSubCategoryUseCase>(),
+      ),
+    );
+    gh.factory<_i123.HomeBloc>(
+      () => _i123.HomeBloc(
+        gh<_i726.GetCategoriesUseCase>(),
+        gh<_i306.GetBrandsUseCase>(),
       ),
     );
     return this;
