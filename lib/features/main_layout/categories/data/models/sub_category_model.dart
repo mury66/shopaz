@@ -13,12 +13,12 @@ class SubCategoryModel {
   final String? updatedAt;
 
   SubCategoryModel({
-    required this.id,
-    required this.name,
-    required this.slug,
-    required this.category,
-    required this.createdAt,
-    required this.updatedAt,
+    this.id,
+    this.name,
+    this.slug,
+    this.category,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory SubCategoryModel.fromJson(Map<String, dynamic> json) =>

@@ -7,10 +7,12 @@ part of 'brand_model.dart';
 // **************************************************************************
 
 BrandModel _$BrandModelFromJson(Map<String, dynamic> json) => BrandModel(
-  results: (json['results'] as num).toInt(),
-  metadata: Metadata.fromJson(json['metadata'] as Map<String, dynamic>),
-  data: (json['data'] as List<dynamic>)
-      .map((e) => BrandData.fromJson(e as Map<String, dynamic>))
+  results: (json['results'] as num?)?.toInt(),
+  metadata: json['metadata'] == null
+      ? null
+      : Metadata.fromJson(json['metadata'] as Map<String, dynamic>),
+  data: (json['data'] as List<dynamic>?)
+      ?.map((e) => BrandData.fromJson(e as Map<String, dynamic>))
       .toList(),
 );
 
@@ -22,9 +24,9 @@ Map<String, dynamic> _$BrandModelToJson(BrandModel instance) =>
     };
 
 Metadata _$MetadataFromJson(Map<String, dynamic> json) => Metadata(
-  currentPage: (json['currentPage'] as num).toInt(),
-  numberOfPages: (json['numberOfPages'] as num).toInt(),
-  limit: (json['limit'] as num).toInt(),
+  currentPage: (json['currentPage'] as num?)?.toInt(),
+  numberOfPages: (json['numberOfPages'] as num?)?.toInt(),
+  limit: (json['limit'] as num?)?.toInt(),
   nextPage: (json['nextPage'] as num?)?.toInt(),
 );
 
@@ -36,12 +38,12 @@ Map<String, dynamic> _$MetadataToJson(Metadata instance) => <String, dynamic>{
 };
 
 BrandData _$BrandDataFromJson(Map<String, dynamic> json) => BrandData(
-  id: json['_id'] as String,
-  name: json['name'] as String,
-  slug: json['slug'] as String,
-  image: json['image'] as String,
-  createdAt: json['createdAt'] as String,
-  updatedAt: json['updatedAt'] as String,
+  id: json['_id'] as String?,
+  name: json['name'] as String?,
+  slug: json['slug'] as String?,
+  image: json['image'] as String?,
+  updatedAt: json['updatedAt'] as String?,
+  createdAt: json['createdAt'] as String?,
 );
 
 Map<String, dynamic> _$BrandDataToJson(BrandData instance) => <String, dynamic>{
@@ -49,6 +51,6 @@ Map<String, dynamic> _$BrandDataToJson(BrandData instance) => <String, dynamic>{
   'name': instance.name,
   'slug': instance.slug,
   'image': instance.image,
-  'createdAt': instance.createdAt,
   'updatedAt': instance.updatedAt,
+  'createdAt': instance.createdAt,
 };

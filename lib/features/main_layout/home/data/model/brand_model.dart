@@ -4,14 +4,14 @@ part 'brand_model.g.dart';
 
 @JsonSerializable()
 class BrandModel {
-  final int results;
-  final Metadata metadata;
-  final List<BrandData> data;
+  final int? results;
+  final Metadata? metadata;
+  final List<BrandData>? data;
 
   const BrandModel({
-    required this.results,
-    required this.metadata,
-    required this.data,
+    this.results,
+    this.metadata,
+    this.data,
   });
 
   factory BrandModel.fromJson(Map<String, dynamic> json) =>
@@ -22,15 +22,15 @@ class BrandModel {
 
 @JsonSerializable()
 class Metadata {
-  final int currentPage;
-  final int numberOfPages;
-  final int limit;
+  final int? currentPage;
+  final int? numberOfPages;
+  final int? limit;
   final int? nextPage;
 
   const Metadata({
-    required this.currentPage,
-    required this.numberOfPages,
-    required this.limit,
+    this.currentPage,
+    this.numberOfPages,
+    this.limit,
     this.nextPage,
   });
 
@@ -43,20 +43,20 @@ class Metadata {
 @JsonSerializable()
 class BrandData {
   @JsonKey(name: '_id')
-  final String id;
-  final String name;
-  final String slug;
-  final String image;
-  final String createdAt;
-  final String updatedAt;
+  final String? id;
+  final String? name;
+  final String? slug;
+  final String? image;
+  final String? updatedAt;
+  final String? createdAt;
 
   const BrandData({
-    required this.id,
-    required this.name,
-    required this.slug,
-    required this.image,
-    required this.createdAt,
-    required this.updatedAt,
+    this.id,
+    this.name,
+    this.slug,
+    this.image,
+    this.updatedAt,
+    this.createdAt,
   });
 
   factory BrandData.fromJson(Map<String, dynamic> json) =>

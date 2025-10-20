@@ -57,8 +57,8 @@ class SignInScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: AppSize.s40.h),
-                      Center(child: SvgPicture.asset(SvgAssets.shopazLogo)),
-                      SizedBox(height: AppSize.s40.h),
+                      Center(child: Image.asset(ImageAssets.shopazLogo)),
+                      SizedBox(height: AppSize.s60.h),
                       Text(
                         'Welcome Back To ShopAZ',
                         style: getBoldStyle(

@@ -20,14 +20,11 @@ class HomeScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       surfaceTintColor: Colors.white,
       automaticallyImplyLeading: automaticallyImplyLeading ?? false,
-      title: SvgPicture.asset(
-        SvgAssets.shopazLogo,
-        height: 25.h,
-        width: 25.w,
-        colorFilter: const ColorFilter.mode(
-          ColorManager.textColor,
-          BlendMode.srcIn,
-        ),
+      title: Image.asset(
+        ImageAssets.shopazLogo,
+        width: 100.w,
+        height: 60.h,
+        color: ColorManager.primary,
       ),
       bottom: PreferredSize(
         preferredSize: const Size(AppSize.s100, AppSize.s60),

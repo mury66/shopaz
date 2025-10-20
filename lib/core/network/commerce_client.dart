@@ -13,6 +13,7 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../features/main_layout/home/data/model/brand_model.dart';
+import '../../features/product_details/data/models/product_details_response.dart';
 part 'commerce_client.g.dart';
 
 @RestApi(baseUrl: 'https://ecommerce.routemisr.com/api/v1/')
@@ -39,6 +40,9 @@ abstract class CommerceClient {
 
   @GET("products")
   Future<ProductsResponse> getAllProducts();
+
+  @GET("products/{id}")
+  Future<ProductDetailsResponse> getProductDetails(@Path('id') String productId);
 
   @POST("cart")
   Future<CartResponse> addToCart(@Body() AddToCartRequest request, @Header('token') String token );

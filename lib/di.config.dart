@@ -46,6 +46,13 @@ import 'features/main_layout/home/domain/usecase/get_brands_usecase.dart'
 import 'features/main_layout/home/domain/usecase/get_categories_usecase.dart'
     as _i726;
 import 'features/main_layout/home/presentation/bloc/home_bloc.dart' as _i123;
+import 'features/product_details/data/data_sources/ds.dart' as _i411;
+import 'features/product_details/data/repo/product_details_repo_impl.dart'
+    as _i17;
+import 'features/product_details/domain/repo/product_details_repo.dart'
+    as _i989;
+import 'features/product_details/domain/usecases/get_product_details_usecase.dart'
+    as _i817;
 import 'features/products_screen/data/data_sources/ds.dart' as _i340;
 import 'features/products_screen/data/repo/products_repo_impl.dart' as _i399;
 import 'features/products_screen/domain/repo/products_repo.dart' as _i801;
@@ -65,6 +72,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i427.HomeRemoteDS>(() => _i427.HomeRemoteDSImpl());
     gh.factory<_i783.CartDS>(() => _i783.CartDSImpl());
     gh.factory<_i340.ProdDs>(() => _i340.ProdDSImpl());
+    gh.factory<_i411.ProdDetailsDs>(() => _i411.ProdDetailsDsImpl());
     gh.factory<_i511.SubCategoryDS>(() => _i511.SubCategoryDSImpl());
     gh.factory<_i431.AuthRemoteDS>(() => _i789.AuthRemoteDSImpl());
     gh.factory<_i411.CartRepo>(() => _i858.CartRepoIMpl(gh<_i783.CartDS>()));
@@ -79,6 +87,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i1071.SubCategoryRepo>(
       () => _i82.SubCategoryRepoImpl(gh<_i511.SubCategoryDS>()),
+    );
+    gh.factory<_i989.ProductDetailsRepo>(
+      () => _i17.ProductDetailsRepoImpl(gh<_i411.ProdDetailsDs>()),
     );
     gh.factory<_i38.AuthRepo>(
       () => _i291.AuthRepoImpl(gh<_i431.AuthRemoteDS>()),
@@ -100,6 +111,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i737.GetProductsUseCase>(
       () => _i737.GetProductsUseCase(gh<_i801.ProductsRepo>()),
+    );
+    gh.factory<_i817.GetProductDetailsUseCase>(
+      () => _i817.GetProductDetailsUseCase(gh<_i989.ProductDetailsRepo>()),
     );
     gh.factory<_i726.GetCategoriesUseCase>(
       () => _i726.GetCategoriesUseCase(gh<_i347.HomeRepo>()),

@@ -83,7 +83,7 @@ class _HomeTabState extends State<HomeTab> {
           }
 
           if (state.brandModel?.data == null ||
-              state.brandModel!.data.isEmpty) {
+              state.brandModel!.data!.isEmpty) {
             return const Center(child: Text("No brands found"));
           }
 
@@ -122,13 +122,13 @@ class _HomeTabState extends State<HomeTab> {
                       height: 270.h,
                       child: GridView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: state.brandModel?.data.length ?? 0,
+                        itemCount: state.brandModel?.data?.length ?? 0,
                         gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                         ),
                         itemBuilder: (context, index) {
-                          final brand = state.brandModel?.data[index];
+                          final brand = state.brandModel?.data![index];
                           if (brand == null) return const SizedBox.shrink();
                           return CustomBrandWidget(brandData: brand);
                         },

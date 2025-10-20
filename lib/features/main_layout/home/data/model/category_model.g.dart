@@ -40,9 +40,9 @@ Category _$CategoryFromJson(Map<String, dynamic> json) => Category(
   id: json['_id'] as String?,
   name: json['name'] as String?,
   slug: json['slug'] as String?,
-  image: json['image'] as String?,
   createdAt: json['createdAt'] as String?,
   updatedAt: json['updatedAt'] as String?,
+  image: json['image'] as String?,
 );
 
 Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{

@@ -51,12 +51,12 @@ class Category {
   final String? updatedAt;
 
   Category({
-    required this.id,
-    required this.name,
-    required this.slug,
-    required this.image,
-    required this.createdAt,
-    required this.updatedAt,
+    this.id,
+    this.name,
+    this.slug,
+    this.createdAt,
+    this.updatedAt,
+    this.image,
   });
 
   factory Category.fromJson(Map<String, dynamic> json) =>

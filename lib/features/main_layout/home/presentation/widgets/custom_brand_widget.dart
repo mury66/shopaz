@@ -25,7 +25,7 @@ class CustomBrandWidget extends StatelessWidget {
               height: 80,
               width: 80,
               fit: BoxFit.cover,
-              imageUrl: brandData.image,
+              imageUrl: brandData.image?? ImageAssets.shopazLogo,
               placeholder: (context, url) =>
               const Center(child: CircularProgressIndicator()),
               errorWidget: (context, url, error) =>

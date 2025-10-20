@@ -1,0 +1,26 @@
+import 'package:dartz/dartz.dart';
+import 'package:shopaz_e_commerce/core/error/failures.dart';
+import 'package:shopaz_e_commerce/features/product_details/data/models/product_details_response.dart';
+import 'package:shopaz_e_commerce/features/products_screen/data/data_sources/ds.dart';
+import 'package:shopaz_e_commerce/features/products_screen/data/models/products_response.dart';
+import 'package:shopaz_e_commerce/features/products_screen/domain/repo/products_repo.dart';
+import 'package:injectable/injectable.dart';
+
+import '../../domain/repo/product_details_repo.dart';
+import '../data_sources/ds.dart';
+
+@Injectable(as: ProductDetailsRepo)
+class ProductDetailsRepoImpl implements ProductDetailsRepo {
+  ProdDetailsDs ds;
+  ProductDetailsRepoImpl(this.ds);
+
+  @override
+  Future<Either<CommerceFailure, ProductDetailsResponse>> getProductDetails(String id) async {
+    try {
+      var res = await ds.getProductDetails(id);
+      return Right(res);
+    } catch (e) {
+      return Left(GeneralFailure(message: e.toString()));
+    }
+  }
+}

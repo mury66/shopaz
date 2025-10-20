@@ -56,7 +56,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           );
         },
         (r) {
-          print("teeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeest $r");
           emit(
             state.copyWith(
               getBrandsRequestState: RequestState.success,
