@@ -5,16 +5,16 @@ sealed class ProductsEvent extends Equatable {
 }
 
 class GetProductsEvent extends ProductsEvent {
-  String id;
-  GetProductsEvent(this.id);
+  final String id;
+  const GetProductsEvent(this.id);
   @override
   List<Object?> get props => [];
 }
 
 class AddToCartEvent extends ProductsEvent {
-  String id;
+  final String id;
 
-  AddToCartEvent(this.id);
+  const AddToCartEvent(this.id);
   @override
   List<Object?> get props => [id];
 }

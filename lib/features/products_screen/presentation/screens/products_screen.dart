@@ -10,6 +10,7 @@ import '../../../auth/presentation/bloc/auth_bloc.dart';
 
 class ProductsScreen extends StatelessWidget {
   final String categoryId;
+
   const ProductsScreen({required this.categoryId, super.key});
 
   @override
@@ -17,27 +18,44 @@ class ProductsScreen extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
-    return BlocProvider(
-      create: (context) => getIt<CartBloc>(),
-        // ..add(LoadCartEvent()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => getIt<ProductsBloc>()..add(GetProductsEvent(categoryId))),
+      ],
       child: Scaffold(
         appBar: const HomeScreenAppBar(automaticallyImplyLeading: true),
-        body: BlocProvider(
-          create: (context) =>
-          getIt<ProductsBloc>()..add(GetProductsEvent(categoryId)),
-          child: BlocConsumer<ProductsBloc, ProductsState>(
-            listener: (context, state) {},
+
+        body: BlocListener<CartBloc, CartState>(
+          listener: (context, state) {
+            if (state.addToCartRequestState == RequestState.success) {
+              final message = state.addToCartResponse?.status ?? "Added to cart successfully ✅";
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(message),
+                  backgroundColor: Colors.green,
+                  behavior: SnackBarBehavior.floating,
+                  duration: const Duration(seconds: 2),
+                ),
+              );
+            } else if (state.addToCartRequestState == RequestState.error) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("❌ Failed to add product to cart"),
+                  backgroundColor: Colors.red,
+                  behavior: SnackBarBehavior.floating,
+                ),
+              );
+            }
+          },
+
+          child: BlocBuilder<ProductsBloc, ProductsState>(
             builder: (context, state) {
               final products = state.model?.data ?? [];
 
-              /// Loading state
               if (state.productsRequestState == RequestState.loading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
+                return const Center(child: CircularProgressIndicator());
               }
 
-              /// Error state
               if (state.productsRequestState == RequestState.error) {
                 return Center(
                   child: Text(
@@ -47,7 +65,6 @@ class ProductsScreen extends StatelessWidget {
                 );
               }
 
-              /// Empty state
               if (products.isEmpty) {
                 return Center(
                   child: Text(
@@ -57,13 +74,11 @@ class ProductsScreen extends StatelessWidget {
                 );
               }
 
-              /// Success state
               return Padding(
                 padding: const EdgeInsets.all(AppPadding.p16),
                 child: GridView.builder(
                   itemCount: products.length,
-                  gridDelegate:
-                  const SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 8,
                     mainAxisSpacing: 8,
@@ -72,15 +87,9 @@ class ProductsScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final product = products[index];
                     return CustomProductWidget(
-                      id: product.id ?? "",
-                      image: product.imageCover ?? "",
-                      title: product.title ?? "",
-                      price: product.price?.toDouble() ?? 0.0,
-                      rating: product.ratingsAverage?.toDouble() ?? 0.0,
-                      discountPercentage: 10,
                       height: height,
                       width: width,
-                      description: product.description ?? "",
+                      model: product,
                     );
                   },
                 ),

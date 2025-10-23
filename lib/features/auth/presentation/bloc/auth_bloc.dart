@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:shopaz_e_commerce/core/cache/cache_helper.dart';
 import 'package:shopaz_e_commerce/core/error/failures.dart';
 import 'package:shopaz_e_commerce/features/auth/data/models/auth_response_model.dart';
 import 'package:shopaz_e_commerce/features/auth/data/models/login_request.dart';
@@ -34,6 +35,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           );
         },
         (model) {
+          CacheHelper.saveString("token", model.token!);
           emit(
             state.copyWith(
               loginRequestState: RequestState.success,
@@ -59,6 +61,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           );
         },
         (r) {
+          CacheHelper.saveString("token", r.token!);
           emit(
             state.copyWith(
               signUpRequestState: RequestState.success,

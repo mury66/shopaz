@@ -9,6 +9,8 @@ import 'package:shopaz_e_commerce/features/main_layout/profile_tab/presentation/
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'categories/presentation/bloc/category_bloc.dart';
+import 'home/presentation/bloc/home_bloc.dart';
 import 'home/presentation/home_tab.dart';
 
 class MainLayout extends StatefulWidget {
@@ -28,8 +30,14 @@ class _MainLayoutState extends State<MainLayout> {
   ];
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-  create: (context) => getIt<CartBloc>()..add(GetCartItemsEvent()),
+    return MultiBlocProvider(
+  providers: [
+    BlocProvider(create: (context) => getIt<HomeBloc>()..add(HomeGetBrandsEvent())..add(HomeGetCategoriesEvent()),
+    ),
+    BlocProvider(create: (context) => getIt<CategoryBloc>()..add(GetCategoriesEvent()),
+    )
+
+  ],
   child: Scaffold(
       appBar: const HomeScreenAppBar(),
       extendBody: false,

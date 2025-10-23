@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopaz_e_commerce/core/error/failures.dart';
 import 'package:shopaz_e_commerce/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:shopaz_e_commerce/features/cart/data/models/add_to_cart_request.dart';
@@ -9,6 +10,8 @@ import 'package:shopaz_e_commerce/features/products_screen/data/models/products_
 import 'package:shopaz_e_commerce/features/products_screen/domain/usecases/get_products.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../../cart/data/models/add_to_cart_response.dart';
 
 part 'products_event.dart';
 
@@ -70,7 +73,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
                 emit(
                   state.copyWith(
                     addToCartRequestState: RequestState.success,
-                    cartEntity: r,
+                    addToCartResponse: r,
                   ),
                 );
               },

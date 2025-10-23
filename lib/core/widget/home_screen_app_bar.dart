@@ -10,6 +10,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../features/cart/presentation/screens/cart_screen.dart';
+
 class HomeScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool? automaticallyImplyLeading;
 
@@ -17,6 +19,7 @@ class HomeScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return AppBar(
       surfaceTintColor: Colors.white,
       automaticallyImplyLeading: automaticallyImplyLeading ?? false,
@@ -94,13 +97,21 @@ class HomeScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
 
               BlocBuilder<CartBloc, CartState>(
                 builder: (context, state) {
+                  CartBloc cartBloc = CartBloc.get(context);
                   return Badge(
-                    label: Text(
-                      state.cartItemsEntity?.numOfCartItems.toString() ?? "0",
-                    ),
+                    label: Text(cartBloc.numOfCartItems.toString()),
                     child: IconButton(
-                      onPressed: () =>
-                          Navigator.pushNamed(context, Routes.cartRoute),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BlocProvider.value(
+                              value: CartBloc.get(context),
+                              child: CartScreen(),
+                            ),
+                          ),
+                        );
+                      },
                       icon: ImageIcon(
                         AssetImage(IconsAssets.icCart),
                         color: ColorManager.primary,

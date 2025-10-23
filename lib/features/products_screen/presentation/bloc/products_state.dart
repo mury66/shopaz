@@ -4,14 +4,14 @@ class ProductsState extends Equatable {
   final RequestState? productsRequestState;
   final RequestState? addToCartRequestState;
   final ProductsResponse? model;
-  final CartEntity? cartEntity;
+  final AddToCartResponse? addToCartResponse;
   final CommerceFailure? failure;
 
   const ProductsState({
     this.productsRequestState,
     this.addToCartRequestState,
     this.model,
-    this.cartEntity,
+    this.addToCartResponse,
     this.failure,
   });
 
@@ -19,26 +19,27 @@ class ProductsState extends Equatable {
     RequestState? productsRequestState,
     RequestState? addToCartRequestState,
     ProductsResponse? model,
-    CartEntity? cartEntity,
+    AddToCartResponse? addToCartResponse,
     CommerceFailure? failure,
   }) {
     return ProductsState(
-      productsRequestState: productsRequestState ?? this.productsRequestState,
-      model: model ?? this.model,
-      failure: failure ?? this.failure,
+      productsRequestState:
+      productsRequestState ?? this.productsRequestState,
       addToCartRequestState:
-          addToCartRequestState ?? this.addToCartRequestState,
-      cartEntity: cartEntity ?? this.cartEntity,
+      addToCartRequestState ?? this.addToCartRequestState,
+      model: model ?? this.model,
+      addToCartResponse: addToCartResponse ?? this.addToCartResponse,
+      failure: failure ?? this.failure,
     );
   }
 
   @override
   List<Object?> get props => [
     productsRequestState,
-    model,
-    failure,
-    cartEntity,
     addToCartRequestState,
+    model,
+    addToCartResponse,
+    failure,
   ];
 }
 

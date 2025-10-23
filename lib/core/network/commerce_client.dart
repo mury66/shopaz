@@ -12,6 +12,7 @@ import 'package:injectable/injectable.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:retrofit/retrofit.dart';
 
+import '../../features/cart/data/models/add_to_cart_response.dart';
 import '../../features/main_layout/home/data/model/brand_model.dart';
 import '../../features/product_details/data/models/product_details_response.dart';
 part 'commerce_client.g.dart';
@@ -45,10 +46,10 @@ abstract class CommerceClient {
   Future<ProductDetailsResponse> getProductDetails(@Path('id') String productId);
 
   @POST("cart")
-  Future<CartResponse> addToCart(@Body() AddToCartRequest request, @Header('token') String token );
+  Future<AddToCartResponse> addToCart(@Body() AddToCartRequest request, @Header('token') String token );
 
   @GET("cart")
-  Future<CartCountResponse> getCartItems( @Header('token') String token );
+  Future<CartResponse> getCartItems( @Header('token') String token );
 
 }
 

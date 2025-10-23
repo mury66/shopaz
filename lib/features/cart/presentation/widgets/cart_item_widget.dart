@@ -13,9 +13,6 @@ class CartItemWidget extends StatelessWidget {
     super.key,
     required this.imagePath,
     required this.title,
-    required this.color,
-    required this.colorName,
-    required this.size,
     required this.price,
     required this.onDeleteTap,
     required this.quantity,
@@ -24,9 +21,6 @@ class CartItemWidget extends StatelessWidget {
   });
   final String imagePath;
   final String title;
-  final Color color;
-  final String colorName;
-  final int size;
   final int price;
   final void Function() onDeleteTap;
   final int quantity;
@@ -54,7 +48,7 @@ class CartItemWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(15.r),
               border: Border.all(color: ColorManager.primary.withOpacity(0.3)),
             ),
-            child: Image.asset(
+            child: Image.network(
               imagePath,
               fit: BoxFit.cover,
               height: isPortrait ? height * 0.142 : height * 0.23,
@@ -102,11 +96,6 @@ class CartItemWidget extends StatelessWidget {
                   // SizedBox(height: 7.h),
                   const Spacer(),
                   // display color and size===================
-                  ColorAndSizeCartItem(
-                    color: color,
-                    colorName: colorName,
-                    size: size,
-                  ),
                   const Spacer(),
                   // display price and quantity =================
                   Row(

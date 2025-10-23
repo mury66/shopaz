@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../core/cache/cache_helper.dart';
+import '../../../../core/routes_manager/routes.dart';
 import '../../../../core/widget/main_text_field.dart';
 import '../../../../core/widget/validators.dart';
 
@@ -61,7 +63,7 @@ class ProfileTabState extends State<ProfileTab> {
                 hint: 'Enter your full name',
                 label: 'Full Name',
                 controller:
-                    TextEditingController(text: 'Mohamed Mohamed Nabil'),
+                TextEditingController(text: 'Mohamed Mohamed Nabil'),
                 labelTextStyle: getMediumStyle(
                     color: ColorManager.primary, fontSize: FontSize.s18),
                 suffixIcon: IconButton(
@@ -148,7 +150,7 @@ class ProfileTabState extends State<ProfileTab> {
               SizedBox(height: AppSize.s18.h),
               BuildTextField(
                 controller:
-                    TextEditingController(text: '6th October, street 11.....'),
+                TextEditingController(text: '6th October, street 11.....'),
                 borderBackgroundColor: ColorManager.primary.withOpacity(.5),
                 readOnly: isAddressReadOnly,
                 backgroundColor: ColorManager.white,
@@ -170,6 +172,35 @@ class ProfileTabState extends State<ProfileTab> {
                     .copyWith(fontSize: 18.sp),
               ),
               SizedBox(height: AppSize.s50.h),
+
+              SizedBox(
+                width: double.infinity,
+                height: 50.h,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: ColorManager.primary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                  ),
+                  onPressed: () {
+                    CacheHelper.remove("token");
+                    Navigator.pushReplacementNamed(context,Routes.signInRoute);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Logged out successfully!'),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    'Log Out',
+                    style: getSemiBoldStyle(
+                      color: ColorManager.white,
+                      fontSize: FontSize.s16,
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

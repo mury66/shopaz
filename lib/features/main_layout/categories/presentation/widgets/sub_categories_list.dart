@@ -71,6 +71,6 @@ class SubCategoriesList extends StatelessWidget {
   }
 
   goToCategoryProductsListScreen(context,String catId) {
-    Navigator.push(context,MaterialPageRoute(builder: (context) => ProductsScreen(categoryId:catId,)));
+    Navigator.push(context,MaterialPageRoute(builder: (context) => ProductsScreen(categoryId: catId,)));
   }
 }

@@ -3,34 +3,25 @@ import 'package:shopaz_e_commerce/core/resources/color_manager.dart';
 import 'package:shopaz_e_commerce/core/resources/styles_manager.dart';
 import 'package:shopaz_e_commerce/core/routes_manager/routes.dart';
 import 'package:shopaz_e_commerce/core/widget/heart_button.dart';
-import 'package:shopaz_e_commerce/features/products_screen/presentation/bloc/products_bloc.dart';
+import 'package:shopaz_e_commerce/features/products_screen/presentation/bloc/products_bloc.dart' hide AddToCartEvent;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../cart/presentation/bloc/cart_bloc.dart';
+import '../../../product_details/presentation/screen/product_details.dart';
+import '../../data/models/product_model.dart';
+
 class CustomProductWidget extends StatelessWidget {
   final double width;
   final double height;
-  final String image;
-  final String id;
-  final String title;
-  final String description;
-  final double price;
-  final double discountPercentage;
-  final double rating;
+  final ProductModel model;
 
   const CustomProductWidget({
     super.key,
-
-    required this.id,
     required this.width,
     required this.height,
-    required this.image,
-    required this.title,
-    required this.description,
-    required this.price,
-    required this.discountPercentage,
-    required this.rating,
+    required this.model,
   });
 
   String truncateTitle(String title) {
@@ -54,7 +45,17 @@ class CustomProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, Routes.productDetails),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => BlocProvider.value(
+              value: BlocProvider.of<CartBloc>(context),
+              child: ProductDetails(product: model),
+            ),
+          ),
+        );
+      },
       child: Container(
         width: width * 0.4,
         height: height * 0.3,
@@ -75,7 +76,7 @@ class CustomProductWidget extends StatelessWidget {
                 children: [
                   // Not working with the lastest flutter version
                   CachedNetworkImage(
-                    imageUrl: image,
+                    imageUrl: model.images![0],
                     height: height * 0.15,
                     width: double.infinity,
                     fit: BoxFit.cover,
@@ -84,7 +85,7 @@ class CustomProductWidget extends StatelessWidget {
                     errorWidget: (context, url, error) =>
                         const Icon(Icons.error),
                   ),
-                  Image.network(image, fit: BoxFit.cover),
+                  Image.network(model.images![0], fit: BoxFit.cover),
 
                   Positioned(
                     top: height * 0.01,
@@ -102,7 +103,7 @@ class CustomProductWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      truncateTitle(title),
+                      truncateTitle(model.title ?? ""),
                       style: getMediumStyle(
                         color: ColorManager.textColor,
                         fontSize: 14.sp,
@@ -110,7 +111,7 @@ class CustomProductWidget extends StatelessWidget {
                     ),
                     // SizedBox(height: height * 0.002),
                     Text(
-                      truncateDescription(description),
+                      truncateDescription(model.description ?? ""),
                       style: getRegularStyle(
                         color: ColorManager.textColor,
                         fontSize: 14.sp,
@@ -123,16 +124,13 @@ class CustomProductWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "EGP $price",
+                            "EGP ${model.price}",
                             style: getRegularStyle(
                               color: ColorManager.textColor,
                               fontSize: 14.sp,
                             ),
                           ),
-                          Text(
-                            "$discountPercentage %",
-                            style: getTextWithLine(),
-                          ),
+                          Text("10%", style: getTextWithLine()),
                         ],
                       ),
                     ),
@@ -146,7 +144,7 @@ class CustomProductWidget extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Review ($rating)",
+                                "Review (${model.ratingsAverage})",
                                 style: getRegularStyle(
                                   color: ColorManager.textColor,
                                   fontSize: 12.sp,
@@ -164,9 +162,9 @@ class CustomProductWidget extends StatelessWidget {
                           borderRadius: BorderRadius.circular(100),
                           child: InkWell(
                             onTap: () {
-                              BlocProvider.of<ProductsBloc>(
+                              BlocProvider.of<CartBloc>(
                                 context,
-                              ).add(AddToCartEvent(id));
+                              ).add(AddToCartEvent(model.id ?? ""));
                             },
                             child: Container(
                               height: height * 0.036,

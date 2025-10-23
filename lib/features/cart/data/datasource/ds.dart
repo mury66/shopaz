@@ -5,21 +5,31 @@ import 'package:shopaz_e_commerce/features/cart/data/models/cart_count_response.
 import 'package:shopaz_e_commerce/features/cart/data/models/cart_response.dart';
 import 'package:injectable/injectable.dart';
 
-abstract class CartDS {
-  Future<CartResponse> addToCart(AddToCartRequest request, String token);
+import '../../domain/entity/cart_entity.dart';
+import '../models/add_to_cart_response.dart';
 
-  Future<CartCountResponse> getCartItems(String token);
+abstract class CartDS {
+  Future<AddToCartResponse> addToCart(AddToCartRequest request, String token);
+
+  // Future<CartCountResponse> getCartItemsCount(String token);
+
+  Future<CartResponse> getCartItems(String token);
 }
 
 @Injectable(as: CartDS)
 class CartDSImpl implements CartDS {
   @override
-  Future<CartResponse> addToCart(AddToCartRequest request, String token) async {
+  Future<AddToCartResponse> addToCart(AddToCartRequest request, String token) async {
     return getIt<CommerceClient>().addToCart(request, token);
   }
 
   @override
-  Future<CartCountResponse> getCartItems(String token) {
+  // Future<CartCountResponse> getCartItemsCount(String token) {
+  //   return getIt<CommerceClient>().getCartItemsCount(token);
+  // }
+
+  @override
+  Future<CartResponse> getCartItems(String token) {
     return getIt<CommerceClient>().getCartItems(token);
   }
 }

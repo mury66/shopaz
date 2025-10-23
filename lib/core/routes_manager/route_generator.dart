@@ -7,12 +7,14 @@ import 'package:shopaz_e_commerce/features/product_details/presentation/screen/p
 import 'package:shopaz_e_commerce/features/products_screen/presentation/screens/products_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../../features/products_screen/data/models/product_model.dart';
+
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
     switch (settings.name) {
 
       case Routes.cartRoute:
-        return MaterialPageRoute(builder: (_) => const CartScreen());
+        return MaterialPageRoute(builder: (_) => CartScreen());
       case Routes.mainRoute:
         return MaterialPageRoute(builder: (_) => const MainLayout());
 
@@ -23,7 +25,10 @@ class RouteGenerator {
         );
 
       case Routes.productDetails:
-        return MaterialPageRoute(builder: (_) => const ProductDetails());
+        final product = settings.arguments as ProductModel;
+        return MaterialPageRoute(
+          builder: (_) => ProductDetails(product: product),
+        );
 
       case Routes.signInRoute:
         return MaterialPageRoute(builder: (_) =>  SignInScreen());

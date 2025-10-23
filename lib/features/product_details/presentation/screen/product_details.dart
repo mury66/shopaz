@@ -1,27 +1,56 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopaz_e_commerce/core/resources/assets_manager.dart';
 import 'package:shopaz_e_commerce/core/resources/color_manager.dart';
 import 'package:shopaz_e_commerce/core/resources/styles_manager.dart';
 import 'package:shopaz_e_commerce/core/widget/custom_elevated_button.dart';
-import 'package:shopaz_e_commerce/features/product_details/presentation/widgets/product_color.dart';
 import 'package:shopaz_e_commerce/features/product_details/presentation/widgets/product_description.dart';
 import 'package:shopaz_e_commerce/features/product_details/presentation/widgets/product_item.dart';
 import 'package:shopaz_e_commerce/features/product_details/presentation/widgets/product_label.dart';
 import 'package:shopaz_e_commerce/features/product_details/presentation/widgets/product_rating.dart';
-import 'package:shopaz_e_commerce/features/product_details/presentation/widgets/product_size.dart';
 import 'package:shopaz_e_commerce/features/product_details/presentation/widgets/product_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shopaz_e_commerce/features/products_screen/data/models/product_model.dart';
+
+import '../../../auth/presentation/bloc/auth_bloc.dart';
+import '../../../cart/presentation/bloc/cart_bloc.dart';
 
 class ProductDetails extends StatelessWidget {
-  const ProductDetails({super.key});
+  final ProductModel product;
+  const ProductDetails({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
+    return BlocConsumer<CartBloc, CartState>(
+      listener: (context, state) {
+        if (state.addToCartRequestState == RequestState.success) {
+          final message = state.cartResponse?.status ?? "Added to cart successfully";
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(message),
+              backgroundColor: Colors.green,
+              behavior: SnackBarBehavior.floating,
+              duration: const Duration(seconds: 2),
+            ),
+          );
+        }
+
+        if (state.addToCartRequestState == RequestState.error) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Failed to add product to cart"),
+              backgroundColor: Colors.red,
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+        }
+      },
+  builder: (context, state) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'Product Details',
+          product.title??'Product Details',
           style: getMediumStyle(color: ColorManager.appBarTitleColor)
               .copyWith(fontSize: 20.sp),
         ),
@@ -45,52 +74,36 @@ class ProductDetails extends StatelessWidget {
           padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 50.h),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const ProductSlider(items: [
+            ProductSlider(items: [
               ProductItem(
                 imageUrl:
-                    'https://assets.adidas.com/images/w_1880,f_auto,q_auto/6776024790f445b0873ee66fdcde54a1_9366/GX6544_HM3_hover.jpg',
+                product.images?[0] ?? "https://assets.adidas.com/images/w_1880,f_auto,q_auto/6776024790f445b0873ee66fdcde54a1_9366/GX6544_HM3_hover.jpg",
               ),
               ProductItem(
                 imageUrl:
-                    'https://assets.adidas.com/images/w_1880,f_auto,q_auto/6776024790f445b0873ee66fdcde54a1_9366/GX6544_HM3_hover.jpg',
+                product.images?[1] ?? "https://assets.adidas.com/images/w_1880,f_auto,q_auto/6776024790f445b0873ee66fdcde54a1_9366/GX6544_HM3_hover.jpg",
               ),
               ProductItem(
                 imageUrl:
-                    "https://assets.adidas.com/images/w_1880,f_auto,q_auto/6776024790f445b0873ee66fdcde54a1_9366/GX6544_HM3_hover.jpg",
+                product.images?[2] ?? "https://assets.adidas.com/images/w_1880,f_auto,q_auto/6776024790f445b0873ee66fdcde54a1_9366/GX6544_HM3_hover.jpg",
               )
             ], initialIndex: 0),
             SizedBox(
               height: 24.h,
             ),
-            const ProductLabel(
-                productName: 'Nike Air Jordon', productPrice: 'EGP 3,500'),
+            ProductLabel(
+                productName: product.title?? "", productPrice: 'EGP ${product.price}'),
             SizedBox(
               height: 16.h,
             ),
-            const ProductRating(
-                productBuyers: '3,230', productRating: '4.8 (7,500)'),
+            ProductRating(
+                productBuyers: product.sold.toString(), productRating: '${product.ratingsAverage.toString()} (${product.ratingsQuantity.toString()})'),
             SizedBox(
               height: 16.h,
             ),
-            const ProductDescription(
-                productDescription:
-                    'Nike is a multinational corporation that designs, develops, and sells athletic footwear ,apparel, and accessories'),
-            ProductSize(
-              size: const [35, 38, 39, 40],
-              onSelected: () {},
+            ProductDescription(
+                productDescription: product.description?? ""
             ),
-            SizedBox(
-              height: 20.h,
-            ),
-            Text('Color',
-                style: getMediumStyle(color: ColorManager.appBarTitleColor)
-                    .copyWith(fontSize: 18.sp)),
-            ProductColor(color: const [
-              Colors.red,
-              Colors.blueAccent,
-              Colors.green,
-              Colors.yellow,
-            ], onSelected: () {}),
             SizedBox(
               height: 48.h,
             ),
@@ -107,7 +120,7 @@ class ProductDetails extends StatelessWidget {
                     SizedBox(
                       height: 12.h,
                     ),
-                    Text('EGP 3,500',
+                    Text(product.price.toString(),
                         style:
                             getMediumStyle(color: ColorManager.appBarTitleColor)
                                 .copyWith(fontSize: 18.sp))
@@ -119,7 +132,9 @@ class ProductDetails extends StatelessWidget {
                 Expanded(
                   child: CustomElevatedButton(
                     label: 'Add to cart',
-                    onTap: () {},
+                    onTap: () {
+                      CartBloc.get(context).add(AddToCartEvent(product.id??""));
+                    },
                     prefixIcon: Icon(
                       Icons.add_shopping_cart_outlined,
                       color: ColorManager.white,
@@ -132,5 +147,7 @@ class ProductDetails extends StatelessWidget {
         ),
       ),
     );
+  },
+);
   }
 }
