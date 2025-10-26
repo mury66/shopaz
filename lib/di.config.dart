@@ -25,6 +25,9 @@ import 'features/cart/data/datasource/ds.dart' as _i783;
 import 'features/cart/data/repo/cart_repo_impl.dart' as _i858;
 import 'features/cart/domain/repo/cart_repo.dart' as _i411;
 import 'features/cart/domain/usecases/add_to_cart_usecase.dart' as _i187;
+import 'features/cart/domain/usecases/change_product_quantity_usecase.dart'
+    as _i477;
+import 'features/cart/domain/usecases/delete_cart_item_usecase.dart' as _i134;
 import 'features/cart/domain/usecases/get_cart_items_usecase.dart' as _i403;
 import 'features/cart/presentation/bloc/cart_bloc.dart' as _i239;
 import 'features/main_layout/categories/data/datasource/sub_category_ds.dart'
@@ -82,8 +85,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i187.AddToCartUseCase>(
       () => _i187.AddToCartUseCase(gh<_i411.CartRepo>()),
     );
+    gh.factory<_i477.ChangeProductQuantityUseCase>(
+      () => _i477.ChangeProductQuantityUseCase(gh<_i411.CartRepo>()),
+    );
     gh.factory<_i403.GetCartItemsUseCase>(
       () => _i403.GetCartItemsUseCase(gh<_i411.CartRepo>()),
+    );
+    gh.factory<_i134.DeleteCartItemUseCase>(
+      () => _i134.DeleteCartItemUseCase(gh<_i411.CartRepo>()),
     );
     gh.factory<_i1071.SubCategoryRepo>(
       () => _i82.SubCategoryRepoImpl(gh<_i511.SubCategoryDS>()),
@@ -100,6 +109,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i92.GetSubCategoryUseCase>(
       () => _i92.GetSubCategoryUseCase(gh<_i1071.SubCategoryRepo>()),
     );
+    gh.factory<_i239.CartBloc>(
+      () => _i239.CartBloc(
+        gh<_i187.AddToCartUseCase>(),
+        gh<_i403.GetCartItemsUseCase>(),
+        gh<_i477.ChangeProductQuantityUseCase>(),
+        gh<_i134.DeleteCartItemUseCase>(),
+      ),
+    );
     gh.factory<_i206.LoginUseCase>(
       () => _i206.LoginUseCase(gh<_i38.AuthRepo>()),
     );
@@ -115,17 +132,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i817.GetProductDetailsUseCase>(
       () => _i817.GetProductDetailsUseCase(gh<_i989.ProductDetailsRepo>()),
     );
-    gh.factory<_i726.GetCategoriesUseCase>(
-      () => _i726.GetCategoriesUseCase(gh<_i347.HomeRepo>()),
-    );
     gh.factory<_i306.GetBrandsUseCase>(
       () => _i306.GetBrandsUseCase(gh<_i347.HomeRepo>()),
     );
-    gh.factory<_i239.CartBloc>(
-      () => _i239.CartBloc(
-        gh<_i187.AddToCartUseCase>(),
-        gh<_i403.GetCartItemsUseCase>(),
-      ),
+    gh.factory<_i726.GetCategoriesUseCase>(
+      () => _i726.GetCategoriesUseCase(gh<_i347.HomeRepo>()),
     );
     gh.factory<_i966.ProductsBloc>(
       () => _i966.ProductsBloc(

@@ -24,8 +24,8 @@ Map<String, dynamic> _$CartResponseToJson(CartResponse instance) =>
 CartData _$CartDataFromJson(Map<String, dynamic> json) => CartData(
   id: json['_id'] as String,
   cartOwner: json['cartOwner'] as String,
-  products: (json['products'] as List<dynamic>)
-      .map((e) => ProductItem.fromJson(e as Map<String, dynamic>))
+  products: (json['products'] as List<dynamic>?)
+      ?.map((e) => ProductItem.fromJson(e as Map<String, dynamic>))
       .toList(),
   createdAt: json['createdAt'] as String,
   updatedAt: json['updatedAt'] as String,
@@ -59,11 +59,11 @@ Map<String, dynamic> _$ProductItemToJson(ProductItem instance) =>
 Product _$ProductFromJson(Map<String, dynamic> json) => Product(
   id: json['_id'] as String,
   title: json['title'] as String,
-  quantity: (json['quantity'] as num).toInt(),
+  quantity: (json['quantity'] as num?)?.toInt(),
   imageCover: json['imageCover'] as String,
   category: Category.fromJson(json['category'] as Map<String, dynamic>),
   brand: Brand.fromJson(json['brand'] as Map<String, dynamic>),
-  ratingsAverage: (json['ratingsAverage'] as num).toDouble(),
+  ratingsAverage: json['ratingsAverage'] as num,
   subcategory: (json['subcategory'] as List<dynamic>)
       .map((e) => SubCategory.fromJson(e as Map<String, dynamic>))
       .toList(),

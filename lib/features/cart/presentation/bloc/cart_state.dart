@@ -4,20 +4,21 @@ class CartState {
   final RequestState? addToCartRequestState;
   final RequestState? getCartItemsCountRequestState;
   final RequestState? getCartItemsRequestState;
+  final RequestState? changeProductQuantityRequestState;
+  final RequestState? deleteCartItemRequestState;
 
   final AddToCartResponse? addToCartResponse;
   final CartResponse? cartResponse;
-  final CartCountResponse? cartItemsEntity;
-
   final CommerceFailure? failure;
 
   const CartState({
     this.addToCartRequestState,
     this.getCartItemsCountRequestState,
     this.getCartItemsRequestState,
+    this.changeProductQuantityRequestState,
+    this.deleteCartItemRequestState,
     this.addToCartResponse,
     this.cartResponse,
-    this.cartItemsEntity,
     this.failure,
   });
 
@@ -25,20 +26,25 @@ class CartState {
     RequestState? addToCartRequestState,
     RequestState? getCartItemsCountRequestState,
     RequestState? getCartItemsRequestState,
+    RequestState? changeProductQuantityRequestState,
+    RequestState? deleteCartItemRequestState,
     AddToCartResponse? addToCartResponse,
     CartResponse? cartResponse,
-    CartCountResponse? cartItemsEntity,
     CommerceFailure? failure,
   }) {
     return CartState(
-      addToCartRequestState: addToCartRequestState ?? this.addToCartRequestState,
+      addToCartRequestState:
+      addToCartRequestState ?? this.addToCartRequestState,
       getCartItemsCountRequestState:
       getCartItemsCountRequestState ?? this.getCartItemsCountRequestState,
       getCartItemsRequestState:
       getCartItemsRequestState ?? this.getCartItemsRequestState,
+      changeProductQuantityRequestState: changeProductQuantityRequestState ??
+          this.changeProductQuantityRequestState,
+      deleteCartItemRequestState:
+      deleteCartItemRequestState ?? this.deleteCartItemRequestState,
       addToCartResponse: addToCartResponse ?? this.addToCartResponse,
       cartResponse: cartResponse ?? this.cartResponse,
-      cartItemsEntity: cartItemsEntity ?? this.cartItemsEntity,
       failure: failure ?? this.failure,
     );
   }

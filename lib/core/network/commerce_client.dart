@@ -3,7 +3,6 @@ import 'package:shopaz_e_commerce/features/auth/data/models/auth_response_model.
 import 'package:shopaz_e_commerce/features/auth/data/models/login_request.dart';
 import 'package:shopaz_e_commerce/features/auth/data/models/signup_request.dart';
 import 'package:shopaz_e_commerce/features/cart/data/models/add_to_cart_request.dart';
-import 'package:shopaz_e_commerce/features/cart/data/models/cart_count_response.dart';
 import 'package:shopaz_e_commerce/features/cart/data/models/cart_response.dart';
 import 'package:shopaz_e_commerce/features/main_layout/categories/data/models/sub_category_response.dart';
 import 'package:shopaz_e_commerce/features/main_layout/home/data/model/category_model.dart';
@@ -51,6 +50,12 @@ abstract class CommerceClient {
   @GET("cart")
   Future<CartResponse> getCartItems( @Header('token') String token );
 
+  @PUT("cart/{id}")
+  Future<CartResponse> changeProductQuantity(@Path('id') String productId , @Header('token') String token , @Body() Map<String, String> request);
+
+  @DELETE("cart/{id}")
+  Future<CartResponse> deleteCartItem(@Path('id') String productId , @Header('token') String token);
+
 }
 
 @module
@@ -62,3 +67,11 @@ abstract class DioModule {
   CommerceClient get commerceClient =>
       CommerceClient(dio, baseUrl: 'https://ecommerce.routemisr.com/api/v1/');
 }
+
+
+
+
+
+
+
+

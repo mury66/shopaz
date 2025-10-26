@@ -27,7 +27,7 @@ class CartData {
   @JsonKey(name: '_id')
   final String id;
   final String cartOwner;
-  final List<ProductItem> products;
+  final List<ProductItem>? products;
   final String createdAt;
   final String updatedAt;
   final int totalCartPrice;
@@ -75,17 +75,17 @@ class Product {
   @JsonKey(name: '_id')
   final String id;
   final String title;
-  final int quantity;
+  int? quantity;
   final String imageCover;
   final Category category;
   final Brand brand;
-  final double ratingsAverage;
+  final num ratingsAverage;
   final List<SubCategory> subcategory;
 
   Product({
     required this.id,
     required this.title,
-    required this.quantity,
+    this.quantity,
     required this.imageCover,
     required this.category,
     required this.brand,

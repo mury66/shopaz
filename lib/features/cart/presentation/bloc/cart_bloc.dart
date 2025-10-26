@@ -3,12 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopaz_e_commerce/core/error/failures.dart';
 import 'package:shopaz_e_commerce/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:shopaz_e_commerce/features/cart/data/models/add_to_cart_request.dart';
-import 'package:shopaz_e_commerce/features/cart/data/models/cart_count_response.dart';
 import 'package:shopaz_e_commerce/features/cart/data/models/cart_response.dart';
 import 'package:shopaz_e_commerce/features/cart/domain/entity/cart_entity.dart';
 import 'package:shopaz_e_commerce/features/cart/domain/usecases/add_to_cart_usecase.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
+import 'package:shopaz_e_commerce/features/cart/domain/usecases/change_product_quantity_usecase.dart';
+import 'package:shopaz_e_commerce/features/cart/domain/usecases/delete_cart_item_usecase.dart';
 import '../../data/models/add_to_cart_response.dart';
 import '../../domain/usecases/get_cart_items_usecase.dart';
 
@@ -19,13 +20,14 @@ part 'cart_state.dart';
 @injectable
 class CartBloc extends Bloc<CartEvent, CartState> {
   AddToCartUseCase addToCartUseCase;
-  // GetCartItemsCountUseCase getCartItemsCountUseCase;
   GetCartItemsUseCase getCartItemsUseCase;
+  ChangeProductQuantityUseCase changeProductQuantityUseCase;
+  DeleteCartItemUseCase deleteCartItemUseCase;
   int numOfCartItems = 0;
 
   static CartBloc get(context) => BlocProvider.of(context);
 
-  CartBloc(this.addToCartUseCase,this.getCartItemsUseCase)
+  CartBloc(this.addToCartUseCase,this.getCartItemsUseCase,this.changeProductQuantityUseCase, this.deleteCartItemUseCase)
     : super(CartInitial()) {
     on<CartEvent>((event, emit) async {
       switch (event) {
@@ -55,32 +57,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
               },
             );
           }
-        // case GetCartItemsCountEvent():
-        //   {
-        //     emit(state.copyWith(getCartItemsCountRequestState: RequestState.loading));
-        //
-        //     var res = await getCartItemsCountUseCase.call();
-        //
-        //     res.fold(
-        //       (l) {
-        //         emit(
-        //           state.copyWith(
-        //             getCartItemsCountRequestState: RequestState.error,
-        //             failure: l,
-        //           ),
-        //         );
-        //       },
-        //       (r) {
-        //         emit(
-        //           state.copyWith(
-        //             getCartItemsCountRequestState: RequestState.success,
-        //             cartItemsEntity: r,
-        //           ),
-        //         );
-        //         numOfCartItems = r.numOfCartItems;
-        //       },
-        //     );
-        //   }
         case GetCartItemsEvent():
           {
             emit(state.copyWith(getCartItemsRequestState: RequestState.loading));
@@ -106,10 +82,67 @@ class CartBloc extends Bloc<CartEvent, CartState> {
                     cartResponse: r,
                   ),
                 );
+                numOfCartItems = r.numOfCartItems;
+
               },
             );
           }
 
+        case ChangeProductQuantityEvent():
+          {
+            emit(state.copyWith(changeProductQuantityRequestState: RequestState.loading));
+
+            var res = await changeProductQuantityUseCase.call(event.productId,event.request);
+
+            res.fold(
+                  (l) {
+                print("faaaaaaaaaaail ${l.toString()}");
+
+                emit(
+                  state.copyWith(
+                    changeProductQuantityRequestState: RequestState.error,
+                    failure: l,
+                  ),
+                );
+              },
+                  (r) {
+                print("ssssssssssssuccccccccccccccccces");
+                emit(
+                  state.copyWith(
+                    changeProductQuantityRequestState: RequestState.success,
+                  ),
+                );
+                add(GetCartItemsEvent());
+              },
+            );
+          }
+        case DeleteCartItemEvent():
+          {
+            emit(state.copyWith(deleteCartItemRequestState: RequestState.loading));
+
+            var res = await deleteCartItemUseCase.call(event.productId);
+
+            res.fold(
+                  (l) {
+                print("failed while deleting item ${l.toString()}");
+                emit(
+                  state.copyWith(
+                    deleteCartItemRequestState: RequestState.error,
+                    failure: l,
+                  ),
+                );
+              },
+                  (r) {
+                print("successfully deleted item");
+                emit(
+                  state.copyWith(
+                    deleteCartItemRequestState: RequestState.success,
+                  ),
+                );
+                add(GetCartItemsEvent());
+              },
+            );
+          }
       }
     });
   }

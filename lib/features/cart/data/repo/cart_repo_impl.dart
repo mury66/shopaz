@@ -18,7 +18,7 @@ class CartRepoIMpl implements CartRepo {
 
   @override
   Future<Either<CommerceFailure, AddToCartResponse>> addToCart(
-      AddToCartRequest request,) async {
+      AddToCartRequest request) async {
     try {
       String token = CacheHelper.getString('token') ?? "";
       var result = await ds.addToCart(request, token);
@@ -29,23 +29,41 @@ class CartRepoIMpl implements CartRepo {
   }
 
   @override
-  // Future<Either<CommerceFailure, CartCountResponse>> getCartItemsCount() async {
-  //   try {
-  //     String token = CacheHelper.getString('token') ?? "";
-  //     var result = await ds.getCartItemsCount(token);
-  //     return Right(result);
-  //   } catch (e) {
-  //     return Left(GeneralFailure(message: e.toString()));
-  //   }
-  // }
-
-  @override
   Future<Either<CommerceFailure, CartResponse>> getCartItems() async {
     try {
       String token = CacheHelper.getString('token') ?? "";
       var result = await ds.getCartItems(token);
       return Right(result);
     } catch (e) {
+      return Left(GeneralFailure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<CommerceFailure, String>> changeProductQuantity(String productId,Map<String, String> request,) async {
+    try {
+      String token = CacheHelper.getString('token') ?? "";
+      var result = await ds.changeProductQuantity(productId, token, request);
+      print(' correct changeProductQuantity Not Error');
+
+      return Right(result.status.toString());
+    } catch (e, s) {
+    print('❌ changeProductQuantity Error: $e');
+    print(s);
+    return Left(GeneralFailure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<CommerceFailure, String>> deleteCartItem(String productId) async {
+    try {
+      String token = CacheHelper.getString('token') ?? "";
+      var result = await ds.deleteCartItem(productId, token);
+      print(result.status.toString());
+      return Right(result.status.toString());
+    } catch (e, s) {
+      print('❌ changeProductQuantity Error: $e');
+      print(s);
       return Left(GeneralFailure(message: e.toString()));
     }
   }
