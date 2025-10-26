@@ -4,10 +4,10 @@ part 'cart_response.g.dart';
 
 @JsonSerializable()
 class CartResponse {
-  final String status;
-  final int numOfCartItems;
-  final String cartId;
-  final CartData data;
+  final String? status;
+  final int? numOfCartItems;
+  final String? cartId;
+  final CartData? data;
 
   CartResponse({
     required this.status,

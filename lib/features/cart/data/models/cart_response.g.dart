@@ -7,10 +7,12 @@ part of 'cart_response.dart';
 // **************************************************************************
 
 CartResponse _$CartResponseFromJson(Map<String, dynamic> json) => CartResponse(
-  status: json['status'] as String,
-  numOfCartItems: (json['numOfCartItems'] as num).toInt(),
-  cartId: json['cartId'] as String,
-  data: CartData.fromJson(json['data'] as Map<String, dynamic>),
+  status: json['status'] as String?,
+  numOfCartItems: (json['numOfCartItems'] as num?)?.toInt(),
+  cartId: json['cartId'] as String?,
+  data: json['data'] == null
+      ? null
+      : CartData.fromJson(json['data'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$CartResponseToJson(CartResponse instance) =>

@@ -27,8 +27,12 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   static CartBloc get(context) => BlocProvider.of(context);
 
-  CartBloc(this.addToCartUseCase,this.getCartItemsUseCase,this.changeProductQuantityUseCase, this.deleteCartItemUseCase)
-    : super(CartInitial()) {
+  CartBloc(
+    this.addToCartUseCase,
+    this.getCartItemsUseCase,
+    this.changeProductQuantityUseCase,
+    this.deleteCartItemUseCase,
+  ) : super(CartInitial()) {
     on<CartEvent>((event, emit) async {
       switch (event) {
         case AddToCartEvent():
@@ -59,13 +63,15 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           }
         case GetCartItemsEvent():
           {
-            emit(state.copyWith(getCartItemsRequestState: RequestState.loading));
+            emit(
+              state.copyWith(getCartItemsRequestState: RequestState.loading),
+            );
 
             var res = await getCartItemsUseCase.call();
 
             res.fold(
-                  (l) {
-                    print("faaaaaaaaaaail ${l.toString()}");
+              (l) {
+                print("failed at GetCartItemsEvent ${l.toString()}");
 
                 emit(
                   state.copyWith(
@@ -74,29 +80,35 @@ class CartBloc extends Bloc<CartEvent, CartState> {
                   ),
                 );
               },
-                  (r) {
-                    print("ssssssssssssuccccccccccccccccces");
+              (r) {
+                print("ssssssssssssuccccccccccccccccces");
                 emit(
                   state.copyWith(
                     getCartItemsRequestState: RequestState.success,
                     cartResponse: r,
                   ),
                 );
-                numOfCartItems = r.numOfCartItems;
-
+                numOfCartItems = r.numOfCartItems ?? 0;
               },
             );
           }
 
         case ChangeProductQuantityEvent():
           {
-            emit(state.copyWith(changeProductQuantityRequestState: RequestState.loading));
+            emit(
+              state.copyWith(
+                changeProductQuantityRequestState: RequestState.loading,
+              ),
+            );
 
-            var res = await changeProductQuantityUseCase.call(event.productId,event.request);
+            var res = await changeProductQuantityUseCase.call(
+              event.productId,
+              event.request,
+            );
 
             res.fold(
-                  (l) {
-                print("faaaaaaaaaaail ${l.toString()}");
+              (l) {
+                print("fialed at ChangeProductQuantityEvent ${l.toString()}");
 
                 emit(
                   state.copyWith(
@@ -105,8 +117,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
                   ),
                 );
               },
-                  (r) {
-                print("ssssssssssssuccccccccccccccccces");
+              (r) {
                 emit(
                   state.copyWith(
                     changeProductQuantityRequestState: RequestState.success,
@@ -118,13 +129,16 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           }
         case DeleteCartItemEvent():
           {
-            emit(state.copyWith(deleteCartItemRequestState: RequestState.loading));
-
+            emit(
+              state.copyWith(
+                deleteCartItemRequestState: RequestState.loading,
+              ),
+            );
             var res = await deleteCartItemUseCase.call(event.productId);
-
             res.fold(
-                  (l) {
-                print("failed while deleting item ${l.toString()}");
+              (l) {
+                print("fialed at ChangeProductQuantityEvent ${l.toString()}");
+
                 emit(
                   state.copyWith(
                     deleteCartItemRequestState: RequestState.error,
@@ -132,14 +146,14 @@ class CartBloc extends Bloc<CartEvent, CartState> {
                   ),
                 );
               },
-                  (r) {
-                print("successfully deleted item");
+              (r) {
                 emit(
                   state.copyWith(
                     deleteCartItemRequestState: RequestState.success,
+                    cartResponse: r,
                   ),
                 );
-                add(GetCartItemsEvent());
+                numOfCartItems = r.numOfCartItems ?? 0;
               },
             );
           }

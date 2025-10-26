@@ -8,6 +8,7 @@ import 'package:shopaz_e_commerce/core/resources/values_manager.dart';
 import 'package:shopaz_e_commerce/features/cart/presentation/widgets/cart_item_widget.dart';
 import 'package:shopaz_e_commerce/features/cart/presentation/widgets/total_price_and_checkout_botton.dart';
 
+import '../../../../core/error/snack_bars.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../bloc/cart_bloc.dart';
 
@@ -23,26 +24,6 @@ class _CartScreenState extends State<CartScreen> {
   void initState() {
     super.initState();
     context.read<CartBloc>().add(GetCartItemsEvent());
-  }
-
-  void _showSnack(BuildContext context, String message, Color color) {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(
-          backgroundColor: color.withOpacity(0.9),
-          content: Text(
-            message,
-            style: const TextStyle(color: Colors.white, fontSize: 15),
-          ),
-          behavior: SnackBarBehavior.floating,
-          margin: const EdgeInsets.all(16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          duration: const Duration(milliseconds: 900),
-        ),
-      );
   }
 
   @override
@@ -79,14 +60,14 @@ class _CartScreenState extends State<CartScreen> {
             listener: (context, state) {
               if (state.changeProductQuantityRequestState ==
                   RequestState.loading) {
-                _showSnack(context, "Updating quantity...", Colors.orange);
+                showSnack(context, "Updating quantity...", Colors.orange);
               } else if (state.changeProductQuantityRequestState ==
                   RequestState.success) {
-                _showSnack(
+                showSnack(
                     context, "Quantity updated successfully", Colors.green);
               } else if (state.changeProductQuantityRequestState ==
                   RequestState.error) {
-                _showSnack(context, "Failed to update quantity", Colors.red);
+                showSnack(context, "Failed to update quantity", Colors.red);
               }
             },
           ),
@@ -97,21 +78,21 @@ class _CartScreenState extends State<CartScreen> {
                 current.deleteCartItemRequestState,
             listener: (context, state) {
               if (state.deleteCartItemRequestState == RequestState.loading) {
-                _showSnack(context, "Removing item...", Colors.orange);
+                showSnack(context, "Removing item...", Colors.orange);
               } else if (state.deleteCartItemRequestState ==
                   RequestState.success) {
-                _showSnack(
+                showSnack(
                     context, "Item removed successfully", Colors.green);
               } else if (state.deleteCartItemRequestState ==
                   RequestState.error) {
-                _showSnack(context, "Failed to remove item", Colors.red);
+                showSnack(context, "Failed to remove item", Colors.red);
               }
             },
           ),
         ],
         child: BlocBuilder<CartBloc, CartState>(
           builder: (context, state) {
-            if (state.getCartItemsRequestState == RequestState.loading) {
+            if (state.getCartItemsRequestState == RequestState.loading || state.deleteCartItemRequestState == RequestState.loading) {
               return const Center(
                 child: CircularProgressIndicator(color: Colors.teal),
               );
@@ -184,7 +165,7 @@ class _CartScreenState extends State<CartScreen> {
                         );
                       },
                       separatorBuilder: (_, __) => SizedBox(height: 14.h),
-                      itemCount: cart.products!.length,
+                      itemCount: cart!.products!.length,
                     ),
                   ),
                   const SizedBox(height: 8),

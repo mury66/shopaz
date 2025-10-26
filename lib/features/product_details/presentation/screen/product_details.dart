@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shopaz_e_commerce/features/products_screen/data/models/product_model.dart';
 
+import '../../../../core/error/snack_bars.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../../../cart/presentation/bloc/cart_bloc.dart';
 
@@ -25,24 +26,12 @@ class ProductDetails extends StatelessWidget {
       listener: (context, state) {
         if (state.addToCartRequestState == RequestState.success) {
           final message = state.cartResponse?.status ?? "Added to cart successfully";
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(message),
-              backgroundColor: Colors.green,
-              behavior: SnackBarBehavior.floating,
-              duration: const Duration(seconds: 2),
-            ),
-          );
+          showSnack(context, message, Colors.green);
         }
 
         if (state.addToCartRequestState == RequestState.error) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("Failed to add product to cart"),
-              backgroundColor: Colors.red,
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
+          final message = state.cartResponse?.status ?? "Failed to add to cart";
+          showSnack(context, message, Colors.green);
         }
       },
   builder: (context, state) {

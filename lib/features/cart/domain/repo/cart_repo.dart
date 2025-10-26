@@ -10,5 +10,5 @@ abstract class CartRepo{
  Future<Either<CommerceFailure,AddToCartResponse>> addToCart(AddToCartRequest request);
  Future<Either<CommerceFailure,CartResponse>>  getCartItems();
  Future<Either<CommerceFailure,String>>  changeProductQuantity(String productId,Map<String, String> request);
- Future<Either<CommerceFailure,String>>  deleteCartItem(String productId);
+ Future<Either<CommerceFailure,CartResponse>>  deleteCartItem(String productId);
 }

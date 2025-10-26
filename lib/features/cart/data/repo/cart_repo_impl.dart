@@ -55,12 +55,12 @@ class CartRepoIMpl implements CartRepo {
   }
 
   @override
-  Future<Either<CommerceFailure, String>> deleteCartItem(String productId) async {
+  Future<Either<CommerceFailure, CartResponse>> deleteCartItem(String productId) async {
     try {
       String token = CacheHelper.getString('token') ?? "";
       var result = await ds.deleteCartItem(productId, token);
       print(result.status.toString());
-      return Right(result.status.toString());
+      return Right(result);
     } catch (e, s) {
       print('❌ changeProductQuantity Error: $e');
       print(s);
