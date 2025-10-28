@@ -15,6 +15,8 @@ abstract class CartDS {
   Future<CartResponse> getCartItems(String token);
 
   Future<CartResponse> deleteCartItem(String productId,String token);
+
+  Future<Map<String, String>> deleteAllCartItems( String token);
 }
 
 @Injectable(as: CartDS)
@@ -38,6 +40,14 @@ class CartDSImpl implements CartDS {
   Future<CartResponse> deleteCartItem(String productId, String token) {
     return getIt<CommerceClient>().deleteCartItem(productId, token);
   }
+
+  @override
+  Future<Map<String, String>> deleteAllCartItems(String token) {
+    return getIt<CommerceClient>().deleteAllCartItems(token);
+  }
+
+
+
 
 
 }

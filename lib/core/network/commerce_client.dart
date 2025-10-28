@@ -10,8 +10,8 @@ import 'package:shopaz_e_commerce/features/products_screen/data/models/products_
 import 'package:injectable/injectable.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:retrofit/retrofit.dart';
-
 import '../../features/cart/data/models/add_to_cart_response.dart';
+import '../../features/main_layout/favourite/data/models/wishlist_response.dart';
 import '../../features/main_layout/home/data/model/brand_model.dart';
 import '../../features/product_details/data/models/product_details_response.dart';
 part 'commerce_client.g.dart';
@@ -44,6 +44,12 @@ abstract class CommerceClient {
   @GET("products/{id}")
   Future<ProductDetailsResponse> getProductDetails(@Path('id') String productId);
 
+  @POST("wishlist")
+  Future<WishListResponse> addToFavourites(@Header('token') String token , @Body() Map<String, String> request);
+
+  @DELETE("wishlist/{id}")
+  Future<WishListResponse> removeFromFavourites(@Path('id') String productId , @Header('token') String token);
+
   @POST("cart")
   Future<AddToCartResponse> addToCart(@Body() AddToCartRequest request, @Header('token') String token );
 
@@ -55,6 +61,9 @@ abstract class CommerceClient {
 
   @DELETE("cart/{id}")
   Future<CartResponse> deleteCartItem(@Path('id') String productId , @Header('token') String token);
+
+  @DELETE("cart")
+  Future<Map<String, String>> deleteAllCartItems(@Header('token') String token);
 
 }
 

@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopaz_e_commerce/core/cache/cache_helper.dart';
 import 'package:shopaz_e_commerce/core/error/failures.dart';
 import 'package:shopaz_e_commerce/features/auth/data/models/auth_response_model.dart';
@@ -16,6 +17,8 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   LoginUseCase loginUseCase;
   SignUpUseCase signUpUseCase;
+
+  static AuthBloc get(context) => BlocProvider.of(context);
 
   AuthBloc(this.loginUseCase, this.signUpUseCase) : super(AuthInitState()) {
     on<LoginEvent>((event, emit) async {
@@ -65,7 +68,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(
             state.copyWith(
               signUpRequestState: RequestState.success,
-              signUpResponseModel: r,
+              authResponseModel: r,
             ),
           );
         },

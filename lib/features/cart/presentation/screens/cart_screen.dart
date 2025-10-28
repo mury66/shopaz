@@ -43,9 +43,11 @@ class _CartScreenState extends State<CartScreen> {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              context.read<CartBloc>().add(DeleteAllCartItemsEvent());
+            },
             icon: ImageIcon(
-              AssetImage(IconsAssets.icSearch),
+              AssetImage(IconsAssets.icDelete),
               color: ColorManager.primary,
             ),
           ),
@@ -89,6 +91,25 @@ class _CartScreenState extends State<CartScreen> {
               }
             },
           ),
+
+          BlocListener<CartBloc, CartState>(
+            listenWhen: (previous, current) =>
+            previous.deleteAllCartItemsRequestState !=
+                current.deleteAllCartItemsRequestState,
+            listener: (context, state) {
+              if (state.deleteAllCartItemsRequestState == RequestState.loading) {
+                showSnack(context, "Removing All items...", Colors.orange);
+              } else if (state.deleteAllCartItemsRequestState ==
+                  RequestState.success) {
+                showSnack(
+                    context, "All Items removed successfully", Colors.green);
+              } else if (state.deleteCartItemRequestState ==
+                  RequestState.error) {
+                showSnack(context, "Failed to empty the cart", Colors.red);
+              }
+            },
+          ),
+
         ],
         child: BlocBuilder<CartBloc, CartState>(
           builder: (context, state) {
@@ -145,21 +166,14 @@ class _CartScreenState extends State<CartScreen> {
                             },
                             onDecrementTap: (value) {
                               if (quantity > 1) {
-                                CartBloc.get(context).add(
-                                  ChangeProductQuantityEvent(
-                                    product.product.id,
-                                    {"count": "${quantity - 1}"},
-                                  ),
-                                );
+                                context.read<CartBloc>().add(ChangeProductQuantityEvent(product.product.id,{"count": "${quantity - 1}"}),);
+                              }
+                              if (quantity == 1) {
+                                context.read<CartBloc>().add(DeleteCartItemEvent(product.product.id),);
                               }
                             },
                             onIncrementTap: (value) {
-                              CartBloc.get(context).add(
-                                ChangeProductQuantityEvent(
-                                  product.product.id,
-                                  {"count": "${quantity + 1}"},
-                                ),
-                              );
+                              context.read<CartBloc>().add(ChangeProductQuantityEvent(product.product.id,{"count": "${quantity + 1}"}),);
                             },
                           ),
                         );

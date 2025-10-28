@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../cart/presentation/bloc/cart_bloc.dart';
+import '../../../main_layout/favourite/presentation/bloc/favourite_bloc.dart';
 import '../../../product_details/presentation/screen/product_details.dart';
 import '../../data/models/product_model.dart';
 
@@ -90,7 +91,12 @@ class CustomProductWidget extends StatelessWidget {
                   Positioned(
                     top: height * 0.01,
                     right: width * 0.02,
-                    child: HeartButton(onTap: () {}),
+                    child: HeartButton(
+
+                        onTap: () {
+
+                      context.read<FavouriteBloc>().add(RemoveFromFavouriteEvent(model.id ?? ""));
+                    }, ),
                   ),
                 ],
               ),

@@ -27,6 +27,8 @@ import 'features/cart/domain/repo/cart_repo.dart' as _i411;
 import 'features/cart/domain/usecases/add_to_cart_usecase.dart' as _i187;
 import 'features/cart/domain/usecases/change_product_quantity_usecase.dart'
     as _i477;
+import 'features/cart/domain/usecases/delete_all_cart_items_usecase.dart'
+    as _i527;
 import 'features/cart/domain/usecases/delete_cart_item_usecase.dart' as _i134;
 import 'features/cart/domain/usecases/get_cart_items_usecase.dart' as _i403;
 import 'features/cart/presentation/bloc/cart_bloc.dart' as _i239;
@@ -40,6 +42,18 @@ import 'features/main_layout/categories/domain/usecases/get_sub_category_usecase
     as _i92;
 import 'features/main_layout/categories/presentation/bloc/category_bloc.dart'
     as _i916;
+import 'features/main_layout/favourite/data/datasource/favourites_ds.dart'
+    as _i789;
+import 'features/main_layout/favourite/data/repo/subcategory_repo_impl.dart'
+    as _i90;
+import 'features/main_layout/favourite/domain/repo/favourite_repo.dart'
+    as _i147;
+import 'features/main_layout/favourite/domain/usecases/add_to_favourite_usecase.dart'
+    as _i425;
+import 'features/main_layout/favourite/domain/usecases/remove_from_favourite_usecase.dart'
+    as _i1011;
+import 'features/main_layout/favourite/presentation/bloc/favourite_bloc.dart'
+    as _i759;
 import 'features/main_layout/home/data/datasources/home_remote_ds.dart'
     as _i427;
 import 'features/main_layout/home/data/repo/home_repo_impl.dart' as _i573;
@@ -74,6 +88,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i56.CommerceClient>(() => dioModule.commerceClient);
     gh.factory<_i427.HomeRemoteDS>(() => _i427.HomeRemoteDSImpl());
     gh.factory<_i783.CartDS>(() => _i783.CartDSImpl());
+    gh.factory<_i789.FavouriteDS>(() => _i789.SubCategoryDSImpl());
     gh.factory<_i340.ProdDs>(() => _i340.ProdDSImpl());
     gh.factory<_i411.ProdDetailsDs>(() => _i411.ProdDetailsDsImpl());
     gh.factory<_i511.SubCategoryDS>(() => _i511.SubCategoryDSImpl());
@@ -94,8 +109,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i134.DeleteCartItemUseCase>(
       () => _i134.DeleteCartItemUseCase(gh<_i411.CartRepo>()),
     );
+    gh.factory<_i527.DeleteAllCartItemsUseCase>(
+      () => _i527.DeleteAllCartItemsUseCase(gh<_i411.CartRepo>()),
+    );
     gh.factory<_i1071.SubCategoryRepo>(
       () => _i82.SubCategoryRepoImpl(gh<_i511.SubCategoryDS>()),
+    );
+    gh.factory<_i147.FavouriteRepo>(
+      () => _i90.FavouriteRepoImpl(gh<_i789.FavouriteDS>()),
     );
     gh.factory<_i989.ProductDetailsRepo>(
       () => _i17.ProductDetailsRepoImpl(gh<_i411.ProdDetailsDs>()),
@@ -108,14 +129,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i92.GetSubCategoryUseCase>(
       () => _i92.GetSubCategoryUseCase(gh<_i1071.SubCategoryRepo>()),
-    );
-    gh.factory<_i239.CartBloc>(
-      () => _i239.CartBloc(
-        gh<_i187.AddToCartUseCase>(),
-        gh<_i403.GetCartItemsUseCase>(),
-        gh<_i477.ChangeProductQuantityUseCase>(),
-        gh<_i134.DeleteCartItemUseCase>(),
-      ),
     );
     gh.factory<_i206.LoginUseCase>(
       () => _i206.LoginUseCase(gh<_i38.AuthRepo>()),
@@ -138,6 +151,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i726.GetCategoriesUseCase>(
       () => _i726.GetCategoriesUseCase(gh<_i347.HomeRepo>()),
     );
+    gh.factory<_i425.AddToFavouriteUseCase>(
+      () => _i425.AddToFavouriteUseCase(gh<_i147.FavouriteRepo>()),
+    );
+    gh.factory<_i1011.RemoveFromFavouriteUseCase>(
+      () => _i1011.RemoveFromFavouriteUseCase(gh<_i147.FavouriteRepo>()),
+    );
     gh.factory<_i966.ProductsBloc>(
       () => _i966.ProductsBloc(
         gh<_i737.GetProductsUseCase>(),
@@ -150,10 +169,26 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i92.GetSubCategoryUseCase>(),
       ),
     );
+    gh.factory<_i759.FavouriteBloc>(
+      () => _i759.FavouriteBloc(
+        gh<_i425.AddToFavouriteUseCase>(),
+        gh<_i1011.RemoveFromFavouriteUseCase>(),
+      ),
+    );
     gh.factory<_i123.HomeBloc>(
       () => _i123.HomeBloc(
         gh<_i726.GetCategoriesUseCase>(),
         gh<_i306.GetBrandsUseCase>(),
+      ),
+    );
+    gh.factory<_i239.CartBloc>(
+      () => _i239.CartBloc(
+        gh<_i187.AddToCartUseCase>(),
+        gh<_i403.GetCartItemsUseCase>(),
+        gh<_i477.ChangeProductQuantityUseCase>(),
+        gh<_i134.DeleteCartItemUseCase>(),
+        gh<_i527.DeleteAllCartItemsUseCase>(),
+        gh<_i425.AddToFavouriteUseCase>(),
       ),
     );
     return this;

@@ -10,10 +10,10 @@ class CartResponse {
   final CartData? data;
 
   CartResponse({
-    required this.status,
-    required this.numOfCartItems,
-    required this.cartId,
-    required this.data,
+    this.status,
+    this.numOfCartItems,
+    this.cartId,
+    this.data,
   });
 
   factory CartResponse.fromJson(Map<String, dynamic> json) =>

@@ -4,13 +4,14 @@ import 'package:shopaz_e_commerce/core/error/failures.dart';
 import 'package:shopaz_e_commerce/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:shopaz_e_commerce/features/cart/data/models/add_to_cart_request.dart';
 import 'package:shopaz_e_commerce/features/cart/data/models/cart_response.dart';
-import 'package:shopaz_e_commerce/features/cart/domain/entity/cart_entity.dart';
 import 'package:shopaz_e_commerce/features/cart/domain/usecases/add_to_cart_usecase.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 import 'package:shopaz_e_commerce/features/cart/domain/usecases/change_product_quantity_usecase.dart';
 import 'package:shopaz_e_commerce/features/cart/domain/usecases/delete_cart_item_usecase.dart';
+import 'package:shopaz_e_commerce/features/main_layout/favourite/domain/usecases/add_to_favourite_usecase.dart';
 import '../../data/models/add_to_cart_response.dart';
+import '../../domain/usecases/delete_all_cart_items_usecase.dart';
 import '../../domain/usecases/get_cart_items_usecase.dart';
 
 part 'cart_event.dart';
@@ -23,6 +24,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   GetCartItemsUseCase getCartItemsUseCase;
   ChangeProductQuantityUseCase changeProductQuantityUseCase;
   DeleteCartItemUseCase deleteCartItemUseCase;
+  DeleteAllCartItemsUseCase deleteAllCartItemsUseCase;
+  AddToFavouriteUseCase addToFavouriteUseCase;
   int numOfCartItems = 0;
 
   static CartBloc get(context) => BlocProvider.of(context);
@@ -32,6 +35,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     this.getCartItemsUseCase,
     this.changeProductQuantityUseCase,
     this.deleteCartItemUseCase,
+    this.deleteAllCartItemsUseCase,
+    this.addToFavouriteUseCase,
   ) : super(CartInitial()) {
     on<CartEvent>((event, emit) async {
       switch (event) {
@@ -157,6 +162,35 @@ class CartBloc extends Bloc<CartEvent, CartState> {
               },
             );
           }
+        case DeleteAllCartItemsEvent():
+        {
+          emit(
+            state.copyWith(
+              deleteAllCartItemsRequestState: RequestState.loading,
+            ),
+          );
+          var res = await deleteAllCartItemsUseCase.call();
+          res.fold(
+                (l) {
+              print("fialed at DeleteAllCartItemsEvent ${l.toString()}");
+
+              emit(
+                state.copyWith(
+                  deleteAllCartItemsRequestState: RequestState.error,
+                  failure: l,
+                ),
+              );
+            },
+                (r) {
+              emit(
+                state.copyWith(
+                  deleteAllCartItemsRequestState: RequestState.success,
+              ));
+              Future.delayed(const Duration(milliseconds: 200));
+              add(GetCartItemsEvent());
+            },
+          );
+        }
       }
     });
   }

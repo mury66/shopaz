@@ -22,3 +22,7 @@ class DeleteCartItemEvent extends CartEvent {
   DeleteCartItemEvent(this.productId);
 }
 
+class DeleteAllCartItemsEvent extends CartEvent {
+  DeleteAllCartItemsEvent();
+}
+

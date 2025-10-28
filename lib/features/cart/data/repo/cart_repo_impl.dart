@@ -67,4 +67,15 @@ class CartRepoIMpl implements CartRepo {
       return Left(GeneralFailure(message: e.toString()));
     }
   }
+
+  @override
+  Future<Either<CommerceFailure, String>> deleteAllCartItems() async{
+    try {
+      String token = CacheHelper.getString('token') ?? "";
+      var result =  ds.deleteAllCartItems(token);
+      return result.then((value) => Right(value['message'] ?? ''));
+    } catch (e) {
+      return Future.value(Left(GeneralFailure(message: e.toString())));
+    }
+  }
 }

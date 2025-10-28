@@ -6,7 +6,7 @@ class CartState {
   final RequestState? getCartItemsRequestState;
   final RequestState? changeProductQuantityRequestState;
   final RequestState? deleteCartItemRequestState;
-
+  final RequestState? deleteAllCartItemsRequestState;
   final AddToCartResponse? addToCartResponse;
   final CartResponse? cartResponse;
   final CommerceFailure? failure;
@@ -17,6 +17,7 @@ class CartState {
     this.getCartItemsRequestState,
     this.changeProductQuantityRequestState,
     this.deleteCartItemRequestState,
+    this.deleteAllCartItemsRequestState,
     this.addToCartResponse,
     this.cartResponse,
     this.failure,
@@ -28,6 +29,7 @@ class CartState {
     RequestState? getCartItemsRequestState,
     RequestState? changeProductQuantityRequestState,
     RequestState? deleteCartItemRequestState,
+    RequestState? deleteAllCartItemsRequestState,
     AddToCartResponse? addToCartResponse,
     CartResponse? cartResponse,
     CommerceFailure? failure,
@@ -39,10 +41,13 @@ class CartState {
       getCartItemsCountRequestState ?? this.getCartItemsCountRequestState,
       getCartItemsRequestState:
       getCartItemsRequestState ?? this.getCartItemsRequestState,
-      changeProductQuantityRequestState: changeProductQuantityRequestState ??
+      changeProductQuantityRequestState:
+      changeProductQuantityRequestState ??
           this.changeProductQuantityRequestState,
       deleteCartItemRequestState:
       deleteCartItemRequestState ?? this.deleteCartItemRequestState,
+      deleteAllCartItemsRequestState:
+      deleteAllCartItemsRequestState ?? this.deleteAllCartItemsRequestState,
       addToCartResponse: addToCartResponse ?? this.addToCartResponse,
       cartResponse: cartResponse ?? this.cartResponse,
       failure: failure ?? this.failure,
